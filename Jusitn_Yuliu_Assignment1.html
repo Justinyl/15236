@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why should we invest in carbon capture technologies?</title>
+    <style>
+    
+    body {
+        color:rgb(51, 14, 14);
+        background:#eee;
+    }  
+
+    </style>
+    </head>
+
+<body>
+    <h1> How much it takes to capture carbon? </h1>
+    <p> Carbon emission has been viewed as a serious challenge nowadays by many people, but how much does it take if we want to 
+        capture carbon we emitted? According to the U.S. Energy Information Administration, the United States emmited 5.1 billion 
+        metric tons of energy-related carbon dioxide. According to a report from David W. Keith, capturing carbon from ambient 
+        air directly costs 94-232 $/t-carbon. If we plan to capture  <input type="number" id="percent" value="0">% energy-related carbon, 
+        and let's say it takes 163$ to capture one metric tonne of carbon, it takes $<span id="cost">???</span> billion dollars to 
+        achieve our goal.
+   </p>
+   
+   <p> As we can see, even if we plan to remove just 5% of the energy-related carbon dioxide, it takes $<span id="cost2">???</span> 
+    billion dollars. In September, 2020, the U.S. Department of Energy announced the award roughly $72 million to support carbon caupture
+    technologies. As we can see, this is not comparable to how much we would've paid to capture carbon using today's technologies. Therefore,
+    I argue that that it's worth it to incentivize carbon capture technologies, and maybe we should spend even more.
+   </p>
+
+   <h2> Sources </h2>
+   <p> https://www.usgs.gov/faqs/how-much-carbon-dioxide-does-united-states-and-world-emit-each-year-energy-sources?qt-news_science_products=0#qt-news_science_products </p>
+   <p> https://www.energy.gov/articles/department-energy-invests-72-million-carbon-capture-technologies </p>
+   <p> https://www.sciencedirect.com/science/article/pii/S2542435118302253 </p>
+   <script>
+   //now this is javascript
+
+   const numberInput = document.getElementById("percent");
+   const outputSpan = document.getElementById("cost");
+   const outputSpan2 = document.getElementById("cost2");
+   
+   function updateOutput() {
+       outputSpan.innerText = parseInt(numberInput.value)/100 * 163 * 5.1;
+   }
+   updateOutput();
+   
+   function cost2_calc(){
+       outputSpan2.innerText = 0.05*163*5.1
+   } 
+   cost2_calc();
+
+   numberInput.addEventListener('input', updateOutput);
+   
+   
+   </script>
+   
+</body>
+</html>
+   
