@@ -59,7 +59,7 @@
             ctx.lineTo(ul_x+wid,ul_y+hi);
             ctx.lineTo(ul_x+wid,ul_y);
             ctx.closePath(); //add a line back to the first point of this sub-path
-            ctx.fillStyle = '#756027';
+            ctx.fillStyle = col;
             ctx.fill();
             ctx.font = '15px Arial';
             ctx.strokeText(val.toString(), ul_x, ul_y-10);
@@ -72,6 +72,25 @@
             ctx.lineWidth = wid;
 	        ctx.strokeStyle = color;
 	        ctx.stroke();
+        }       
+
+        /*bl for bottom left, br for bottom right */
+        function draw_grid_horizontal(xbl, ybl, xbr, ybr, stepsize, numstep, wid, color){
+            var i;
+            var xi = xbl;
+            var yi = ybl;
+            var xf = xbr;
+            var yf = ybr;
+            for (i=1; i < numstep+1; i++){
+                yi -= stepsize
+                yf -= stepsize 
+                ctx.beginPath();
+                ctx.moveTo(xi, yi);
+                ctx.lineTo(xf, yf);
+                ctx.lineWidth = wid;
+                ctx.strokeStyle = color;
+                ctx.stroke();
+            }
         }
 
         var countries = ["Austria", "Belgium", "Brazil", "Denmark", "Greece",
@@ -94,11 +113,13 @@
         const bar_width = 50;
         const space = 20;
 
+        draw_grid_horizontal(ref_x-5, ref_y, 575, 400, 40, 9, 1, '#9A9AA3');
+
         var i;
         for (i=0; i < vac.length; i++ ){
             var h;
             h =  height_multiplier*vac[i];
-            draw_bar(ctx, ref_x, ref_y-h, bar_width, h, '#756027', vac[i])
+            draw_bar(ctx, ref_x, ref_y-h, bar_width, h, '#585870', vac[i])
             ctx.font = '15px Arial';
             ctx.strokeText(countries[i], ref_x, ref_y+10);
             ref_x = ref_x + space + bar_width;
