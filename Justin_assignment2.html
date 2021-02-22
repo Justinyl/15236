@@ -20,8 +20,8 @@
             justify-content:center;
     
             /* dark background to highlight our drawing: */
-            background:#444;
-            color:rgb(255, 255, 255);
+            background:#FFF;
+            color:#111;
         }
         h1 {
             display:block;
@@ -35,10 +35,10 @@
     </head>
 
     <body>
-    <h1>Covid Vaccination(01/21/2021)</h1>
-    <p> People vaccinated per hundred </p>
-    <a href="https://www.kaggle.com/gpreda/covid-world-vaccination-progress">Source</a>
+    <h1>Covid Vaccination in Different Countries</h1>
+    <p> This graph compares people that received Covid caccination per hundred in different countries by 01/21/2021.</p>
     <canvas id="vc01_21" width="640" height="480"></canvas>
+    <p> Source: <a href="https://www.kaggle.com/gpreda/covid-world-vaccination-progress">Covid World Vaccination Progress</a> </p>
 
     <script>
     function draw(){
@@ -98,7 +98,7 @@
 
         var vac = [1.17, 1.72, 0.06, 3.15, 1.19, 0.41, 7.93, 4.5];
 
-        const xpad = 15; // padding for the start
+        const xpad = 25; // padding for the start
         const ypad = 400
         var ref_x = xpad; /* bot left x coordinate*/
         var ref_y = ypad; /* bot left y coordinate*/
@@ -119,18 +119,24 @@
         for (i=0; i < vac.length; i++ ){
             var h;
             h =  height_multiplier*vac[i];
-            draw_bar(ctx, ref_x, ref_y-h, bar_width, h, '#585870', vac[i])
+            draw_bar(ctx, ref_x, ref_y-h, bar_width, h, '#6e6e8c', vac[i])
             ctx.font = '15px Arial';
-            ctx.strokeText(countries[i], ref_x, ref_y+10);
+            ctx.fillStyle = 'black'
+            ctx.fillText(countries[i], ref_x, ref_y+10);
             ref_x = ref_x + space + bar_width;
         }
 
         draw_axis(ctx, ref_x0-5, ref_y0 - height_multiplier*8.5, ref_x0-5, ref_y0, 2, '#000000');  
         draw_axis(ctx, ref_x0-5, ref_y0, ref_x-5, ref_y0, 2, '#000000');  
         
-        ctx.font = '15px Arial';
-        ctx.strokeText('People Vaccinated per hundred',  ref_x0-5, ref_y0 - height_multiplier*8.5);
-        1 == 1; // debug purpose
+        ctx.font = '17px Arial';
+        ctx.fillStyle = "black";
+        ctx.fillText('Country', width/2 - 50, ref_y0+35);
+        // rotated text
+        ctx.rotate(270 * Math.PI / 180);
+        ctx.fillText('People Vaccinated per hundred', -350, 13);
+        // ctx.fillText('!!!!!', -300, 8);
+        ctx.rotate(90 * Math.PI / 180);
     }
      draw();
     </script>
