@@ -90,6 +90,9 @@
                 ctx.lineWidth = wid;
                 ctx.strokeStyle = color;
                 ctx.stroke();
+                ctx.font = '15px Arial';
+                ctx.fillStyle = 'black'
+                ctx.fillText(i.toString(), xi-10, yi+5)
             }
         }
 
@@ -98,7 +101,7 @@
 
         var vac = [1.17, 1.72, 0.06, 3.15, 1.19, 0.41, 7.93, 4.5];
 
-        const xpad = 25; // padding for the start
+        const xpad = 60; // padding for the start
         const ypad = 400
         var ref_x = xpad; /* bot left x coordinate*/
         var ref_y = ypad; /* bot left y coordinate*/
@@ -113,7 +116,7 @@
         const bar_width = 50;
         const space = 20;
 
-        draw_grid_horizontal(ref_x-5, ref_y, 575, 400, 40, 9, 1, '#9A9AA3');
+        draw_grid_horizontal(ref_x-5, ref_y, 610, 400, height_multiplier, 8, 1, '#9A9AA3');
 
         var i;
         for (i=0; i < vac.length; i++ ){
