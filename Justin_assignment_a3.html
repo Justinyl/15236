@@ -52,11 +52,11 @@
         In this model, we use shooter anxiety multiplier(0-1) to account for this effect. To address this unfairness, I propose an 
         "ABBA" sequence instead(<a href="http://www.its.caltech.edu/~fede/wp/penales.pdf">ABAB vs ABBA</a>). Let's say in our model, all players are 
         identical with a decent penalty kick skill. The chance to score a penalty kick
-        (<a href="https://sqaf.club/what-percentage-of-penalties-are-scored-stats/#:~:text=How%20Often%20Are%20Penalties%20Scored,time%2C%20penalty%20kicks%20are%20converted.">statistics</a>) is <input id="success_rate" type = "number" value = "0.8" step="0.1">, and the shooter anxiety multiplier is 
+        (0-1 <a href="https://sqaf.club/what-percentage-of-penalties-are-scored-stats/#:~:text=How%20Often%20Are%20Penalties%20Scored,time%2C%20penalty%20kicks%20are%20converted.">statistics</a>) is <input id="success_rate" type = "number" value = "0.8" step="0.1">, and the shooter anxiety multiplier is 
         <input id="shooter_anxiety" type = "number" value = "0.6" step="0.1">, 
         We expect to have the following distribution with 10000 simulations. <button type="button" id="sim">Simulate</button></p>
     <canvas id="result_plot" width="900" height="300"></canvas>
-
+    <p id="message"></p>
     <script>
     /* Help: https://www.w3schools.com/jsref/ */
     function update(){
@@ -71,9 +71,31 @@
         ctx.fillStyle = '#ffffff';
 	    ctx.fillRect(0, 0, width, height);
 
+        // try { 
+        //     if(Number(SR.value) == "")  throw "is Empty";
+        //     if(isNaN(Number(SR.value))) throw "not a number";
+        //     if(Number(SR.value) >= 1)   throw "too high";
+        //     if(Number(SR.value) <= 0)  throw "too low";
+        // }
+        // catch(err) {
+        //     err_msg = "Chance to score " + err;
+        //     message.innerHTML = "<span style='color: red;'>" + err_msg + "</span>";
+        // }
+        // try { 
+        //     if(Number(SA.value) == "")  throw "is Empty";
+        //     if(isNaN(Number(SA.value))) throw "not a number";
+        //     if(Number(SA.value) >= 1)   throw "too high";
+        //     if(Number(SA.value) <= 0)  throw "too low";
+        // }
+        // catch(err) {
+        //     err_msg = "Shooter anxiety multiplier " + err;
+        //     message.innerHTML = "<span style='color: red;'>" + err_msg + "</span>";
+        //     Error();
+        // }
+
         const pb = 1 - Number(SR.value); 
         const sa = Number(SA.value);
-        
+         
 
         /* Calculating the model*/
 
