@@ -39,9 +39,9 @@
     <p> A penalty shootout is a very common way to break a tie in soccer when needed. A penalty shootout is divided into
         two phases. In phase I, there are five rounds in total. In each round, a player from each team will have a one-on-one
         penalty kick to try to score against the other team's goalkeeper. A team is eliminated if it will have less score than 
-        the other team even if if score all the subsequent goals and the other team misses all of them. If no winner was produced
-        from phase I, the shooutout goes to phase II. Phase II uses a sudden death method in which if one team scores and 
-        the other does not in a round, the scoring team wins. This process repeats until a winner is produced. 
+        the other team even if it scores all the subsequent goals and the other team misses all of them. If no winner was produced
+        from phase I, the shootout goes to phase II. Phase II uses a sudden death method in which if one team scores and 
+        the other does not in one round, the scoring team wins. This process repeats until a winner is produced. 
         <a href="https://en.wikipedia.org/wiki/Penalty_shoot-out_(association_football)#Procedure">(Rule of Penalty Shootout)</a>
     </p>
 
@@ -49,9 +49,9 @@
     <p> Currently, the order of the shootout follows the "ABAB" sequence and a coin flip decides which team to go first. This is unfair
         because upon elimination, a shooter will have massive pressure<a href="https://www.sciencedirect.com/science/article/pii/S0167487018302319"> 
         (Shooter anxiety)</a> , causing them to have a lower chance to score, which gives the team to go first an advantage from the coin flip.
-        In this model, we use shooter anxiety multiplier(0-1) to this effect. To address this, I propose an 
+        In this model, we use shooter anxiety multiplier(0-1) to account for this effect. To address this unfairness, I propose an 
         "ABBA" sequence instead(<a href="http://www.its.caltech.edu/~fede/wp/penales.pdf">ABAB vs ABBA</a>). Let's say in our model, all players are 
-        identical with decent penalty kick skill. The chance to score a penalty kick
+        identical with a decent penalty kick skill. The chance to score a penalty kick
         (<a href="https://sqaf.club/what-percentage-of-penalties-are-scored-stats/#:~:text=How%20Often%20Are%20Penalties%20Scored,time%2C%20penalty%20kicks%20are%20converted.">statistics</a>) is <input id="success_rate" type = "number" value = "0.8" step="0.1">, and the shooter anxiety multiplier is 
         <input id="shooter_anxiety" type = "number" value = "0.6" step="0.1">, 
         We expect to have the following distribution with 10000 simulations. <button type="button" id="sim">Simulate</button></p>
