@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf8">
+	<title>Is penalty shootout fair?</title>
+    <style>
+        body {
+            /* page should fill the browser exactly: */
+            width:100vw;
+            height:100vh;
+            overflow:hidden;
+    
+            /* items should be aligned as a series of boxes, vertically: */
+            /* more about flex layouts: https://css-tricks.com/snippets/css/a-guide-to-flexbox/  */
+            display:flex;
+            flex-flow:column;
+            /* items should be centered left/right: */
+            align-items:center;
+            /* items should be centered up/down: */
+            justify-content:center;
+    
+            /* dark background to highlight our drawing: */
+            background:#B3B2B2;
+            color:#111;
+        }
+        h1 {
+            display:block;
+        }
+        #result_plot {
+            display:block;
+        }
+        </style>
+</head>
+
+    </head>
+
+    <body>
+    <h1> What is a penalty shootout?</h1>
+    <p> A penalty shootout is a very common way to break a tie in soccer when needed. A penalty shootout is divided into
+        two phases. In phase I, there are five rounds in total. In each round, a player from each team will have a one-on-one
+        penalty kick to try to score against the other team's goalkeeper. A team is eliminated if it will have less score than 
+        the other team even if if score all the subsequent goals and the other team misses all of them. If no winner was produced
+        from phase I, the shooutout goes to phase II. Phase II uses a sudden death method in which if one team scores and 
+        the other does not in a round, the scoring team wins. This process repeats until a winner is produced. 
+        <a href="https://en.wikipedia.org/wiki/Penalty_shoot-out_(association_football)#Procedure">(Rule of Penalty Shootout)</a>
+    </p>
+
+    <h2> What's the problem here?</h2>
+    <p> Currently, the order of the shootout follows the "ABAB" sequence and a coin flip decides which team to go first. This is unfair
+        because upon elimination, a shooter will have massive pressure<a href="https://www.sciencedirect.com/science/article/pii/S0167487018302319"> 
+        (Shooter anxiety)</a> , causing them to have a lower chance to score, which gives the team to go first an advantage from the coin flip.
+        In this model, we use shooter anxiety multiplier(0-1) to this effect. To address this, I propose an 
+        "ABBA" sequence instead(<a href="http://www.its.caltech.edu/~fede/wp/penales.pdf">ABAB vs ABBA</a>). Let's say in our model, all players are 
+        identical with decent penalty kick skill. The chance to score a penalty kick
+        (<a href="https://sqaf.club/what-percentage-of-penalties-are-scored-stats/#:~:text=How%20Often%20Are%20Penalties%20Scored,time%2C%20penalty%20kicks%20are%20converted.">statistics</a>) is <input id="success_rate" type = "number" value = "0.8" step="0.1">, and the shooter anxiety multiplier is 
+        <input id="shooter_anxiety" type = "number" value = "0.6" step="0.1">, 
+        We expect to have the following distribution with 10000 simulations. <button type="button" id="sim">Simulate</button></p>
+    <canvas id="result_plot" width="900" height="300"></canvas>
+
+    <script>
+    /* Help: https://www.w3schools.com/jsref/ */
+    function update(){
+        const SR = document.getElementById("success_rate");
+        const SA = document.getElementById("shooter_anxiety");
+        const BT = document.getElementById("sim");
+        const canvas = document.getElementById("result_plot");
+        const width = canvas.width;
+        const height = canvas.height;
+        const ctx = canvas.getContext('2d');
+
+        ctx.fillStyle = '#ffffff';
+	    ctx.fillRect(0, 0, width, height);
+
+        const pb = 1 - Number(SR.value); 
+        const sa = Number(SA.value);
+        
+
+        /* Calculating the model*/
+
+        function score(mul){
+            return Math.random()*mul 
+        }
+
+        function shoot_ABAB(a,b,r,prob,sa){
+            var mul = 1;
+            if (r <= 5){
+                if (b > (a+5-r)){mul = sa;}
+                if (score(mul) >= prob){ a = a + 1;}
+                if (a > (b+5-r+1)){ return true;}
+                if (b > (a+5-r)){return false;}
+
+                mul = 1;
+                if (a > (b+5-r)){mul = sa;}
+                if (score(mul) >= prob){b = b + 1;}
+                if (a > (b+5-r)){ return true;}
+                if (b > (a+5-r)){return false;}
+
+                return shoot_ABAB(a, b, r+1, prob, sa)
+            }
+            else{
+                mul = 1;
+                if (score(mul) >= prob){a = a + 1}
+                if (a>b){ mul = sa}
+                if (score(mul) >= prob){b = b + 1}
+                if (a>b){ return true;  }
+                if (b>a){ return false; }
+                return shoot_ABAB(a, b, r+1, prob, sa)
+            }
+        }
+
+        function shoot_ABBA(a,b,r,prob,sa){
+            var mul = 1;
+            /*Case 1*/
+            if (r%2 == 1){
+                if (r <= 5){
+                    if (b > (a+5-r)){mul = sa;}
+                    if (score(mul) >= prob){ a = a + 1;}
+                    if (a > (b+5-r+1)){ return true;}
+                    if (b > (a+5-r)){return false;}
+
+                    mul = 1;
+                    if (a > (b+5-r)){mul = sa;}
+                    if (score(mul) >= prob){b = b + 1;}
+                    if (a > (b+5-r)){ return true;}
+                    if (b > (a+5-r)){return false;}
+
+                    return shoot_ABBA(a, b, r+1, prob, sa)
+                }
+
+                else{
+                    mul = 1;
+                    if (score(mul) >= prob){a = a + 1}
+                    if (a>b){ mul = sa}
+                    if (score(mul) >= prob){b = b + 1}
+                    if (a>b){ return true;  }
+                    if (b>a){ return false; }
+                    return shoot_ABBA(a, b, r+1, prob, sa)
+                }
+            }
+
+            /*Case 2*/
+            if (r%2 == 0){
+                if (r <= 5){
+                    if (a > (b+5-r)){mul = sa;}
+                    if (score(mul) >= prob){ b = b + 1;}
+                    if (b > (a+5-r+1)){ return false;}
+                    if (a > (b+5-r)){return true;}
+
+                    mul = 1;
+                    if (b > (a+5-r)){mul = sa;}
+                    if (score(mul) >= prob){a = a + 1;}
+                    if (b > (a+5-r)){ return false;}
+                    if (a > (b+5-r)){return true;}
+
+                    return shoot_ABBA(a, b, r+1, prob, sa);
+                }
+
+                else{
+                    mul = 1;
+                    if (score(mul) >= prob){b = b + 1}
+                    if (b>a){ mul = sa}
+                    if (score(mul) >= prob){a = a + 1}
+                    if (b>a){ return false }
+                    if (a>b){ return true  }
+                    return shoot_ABBA(a, b, r+1, prob, sa);
+                }
+            }
+        }
+
+
+        var A1 = 0
+        var B1 = 0
+        var A2 = 0
+        var B2 = 0
+        const nsim = 10000
+        
+        for (i=0; i<nsim; i++){
+            var res1 = shoot_ABAB(0,0,1,pb, sa);
+            var res2 = shoot_ABBA(0,0,1,pb, sa);
+            if (res1) {A1 += 1}
+            else {B1 += 1}
+
+            if (res2) {A2 +=1}
+            else {B2 += 1}
+        }
+
+        /* Finish with model*/
+        
+        /* Drawing a bar*/
+        /*Taknig coordinate of upper left point, width and height*/
+        function draw_bar(ctx, ul_x,ul_y, wid, hi, col){
+            ctx.beginPath(); //set the path to empty
+            ctx.moveTo(ul_x,ul_y); 
+            ctx.lineTo(ul_x,ul_y+hi);
+            ctx.lineTo(ul_x+wid,ul_y+hi);
+            ctx.lineTo(ul_x+wid,ul_y);
+            ctx.closePath(); //add a line back to the first point of this sub-path
+            ctx.fillStyle = col;
+            ctx.fill();
+        }
+
+        function draw_axis(ctx, xi, yi, xf, yf, wid, color){
+            ctx.beginPath();
+	        ctx.moveTo(xi, yi);
+            ctx.lineTo(xf, yf);
+            ctx.lineWidth = wid;
+	        ctx.strokeStyle = color;
+	        ctx.stroke();
+        }   
+
+        function add_label(ctx, ft, fs, txt, x, y){
+            ctx.font = ft;
+            ctx.fillStyle = fs;
+            ctx.fillText(txt, x, y);
+        }
+
+        font = '20px Arial'
+        fillStyle = "black"
+
+        const coef = 800/nsim
+
+        draw_bar(ctx, 80, 70, coef*A1, 50, '#FD0E00'); 
+        draw_bar(ctx, 80+coef*A1, 70, coef*B1, 50, '#0000CC'); 
+
+        draw_bar(ctx, 80, 200, coef*A2, 50, '#FD0E00'); 
+        draw_bar(ctx, 80+coef*A2, 200, coef*B2, 50, '#0000CC'); 
+
+        draw_axis(ctx, 480, 40, 480, 270, 2, '#000000');
+        add_label(ctx, font, fillStyle, 'Equal Chance of winning', width/2 - 70, 30);
+
+        add_label(ctx, font, fillStyle, String(A1), 110, 60);
+        add_label(ctx, font, fillStyle, String(B1), width - 80, 60);
+
+        add_label(ctx, font, fillStyle, String(A2), 110, 190);
+        add_label(ctx, font, fillStyle, String(B2), width - 80, 190);
+        
+        add_label(ctx, font, fillStyle, "Team to go first", 110, 25);
+        add_label(ctx, font, fillStyle, "Team to go second", width - 180, 25);
+        
+        add_label(ctx, font, fillStyle, "ABAB", 10, 100);
+        add_label(ctx, font, fillStyle, "ABBA", 10, 230);
+        
+    }
+
+    function present(){
+        update();
+        1 == 1 ;
+    }   
+    present();
+    success_rate.addEventListener('input', present);
+    shooter_anxiety.addEventListener('input', present);
+    sim.addEventListener('click', present);
+    </script>
+    </body>
+</html>
