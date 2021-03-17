@@ -15,9 +15,12 @@
     According to them, more renewable energy should help decreasing the amount of CO2 emitted, but is 
     renewable energy really working? Forget about the so-called "experts". Be a free thinker and let's reason with data. Let's take 
     a look at the data from the U.S. Energy Information Administration and compare the percent change of renewable energy and CO2 
-    emission from <input id="start" type = "number" value = "2010" step="1"> to <input id="end" type = "number" value = "2019" step="1">.
+    emission from <input id="start" type = "number" value = "2010" step="1" min = "2010" max="2019"> to 
+	<input id="end" type = "number" value = "2019" step="1" min = "2010" max="2019">.
 </p>
 
+<p id="ren">Red: Renewable Eneregy Production</p>
+<p id="CO2_E">Light purple: CO2 Emissions</p>
 <canvas id="graph" width="750" height="480"></canvas>
 
 <p>
@@ -25,110 +28,122 @@ As you can see here, most of the time more renewable energy does not lead to a r
 interests fool you. Renewable energy is NOT working!
 </p>
 
+
+
 <script>
-const Y1 = document.getElementById("start");
-const Y2 = document.getElementById("end");
-const canvas = document.getElementById("graph");
-const width = canvas.width;
-const height = canvas.height;
+function proxy(){
+	document.getElementById("ren").style.color = "#e0321b";
+	document.getElementById("CO2_E").style.color = "#9b24f0";
+	const Y1 = document.getElementById("start");
+	const Y2 = document.getElementById("end");
+	const canvas = document.getElementById("graph");
+	const width = canvas.width;
+	const height = canvas.height;
 
-y1 = Number(Y1.value);
-y2 = Number(Y2.value);
+	var y1 = Number(Y1.value);
+	var y2 = Number(Y2.value);
 
-const ctx = canvas.getContext('2d');
+	const ctx = canvas.getContext('2d');
+	ctx.clearRect(0, 0, width, height);
+	const renewable_tot = [7624.932, 8313.762, 9299.548, 8886.018, 9417.903, 9766.517, 9728.765, 10425.229, 11199.936, 11515.378, 11524.18];
+	const CO2_tot = [3.6, -2.5, -4, 2.4, 1.1, -2.8, -1.8, -0.8, 2.9, -2.8];
 
-const renewable = [7624.932, 8313.762, 9299.548, 8886.018, 9417.903, 9766.517, 9728.765, 10425.229, 11199.936, 11515.378, 11524.18];
-const C02 = [3.6, -2.5, -4, 2.4, 1.1, -2.8, -1.8, -0.8, 2.9, -2.8];
+	const renewable = renewable_tot.slice(y1-2010, y2-2010+2);
+	const CO2 = CO2_tot.slice(y1-2010, y2-2010+1);
 
+	var pad =  (height-75)/6;
+	// pad = 0;
 
-var pad =  (height-75)/6;
-pad = 0;
-
-function drawGraph(numx, numy, y1, y2) {
-	ctx.beginPath();
-	ctx.moveTo(100, 25);
-	ctx.lineTo(100, height-50);
-	ctx.stroke();
-
-	ctx.beginPath();
-	ctx.moveTo(100, 25 + (height-75)/2 + pad);
-	ctx.lineTo(width-25, 25 + (height-75)/2 + pad);
-    
-	ctx.stroke();
-	
-	ctx.textAlign = "center";
-	ctx.font = '20px Arial';
-	ctx.fillText('Total Renewable Energy Production vs. CO2 Emissions between ' + y1 + ' and ' + y2, width/2, 25);
-
-	ctx.save(); 
-	ctx.textAlign = "center"; 
-	ctx.font = '15px Arial'; 
-	ctx.rotate(-Math.PI/2); 
-	ctx.fillText("Percent Change", -height/2 - pad, 50); 
-	ctx.restore();
-
-	ctx.textAlign = "center";
-	ctx.font = '15px Arial';
-	ctx.fillText("Year", width/2 + 50, 75 + (height-75)/2 + pad);
-	
-	ctx.textAlign = "center";
-	ctx.font = '12px Arial';
-	ctx.fillText("-8", 85, height-50);
-
-
-
-	var i;
-	for (i = 1; i <= numx; i++) {
+	function drawGraph(numx, numy, y1, y2) {
+		ctx.strokeStyle = '#000000';
 		ctx.beginPath();
-		ctx.moveTo((100 + i*(width-125)/numx), 25 + (height-75)/2 - 4 + pad);
-		ctx.lineTo((100 + i*(width-125)/numx), 25 + (height-75)/2 + 4 + pad);
+		ctx.moveTo(100, 25);
+		ctx.lineTo(100, height-50);
+		ctx.stroke();
+
+		ctx.beginPath();
+		ctx.moveTo(100, 25 + (height-75)/2 + pad);
+		ctx.lineTo(width-25, 25 + (height-75)/2 + pad);
 		ctx.stroke();
 		
 		ctx.textAlign = "center";
-		ctx.font = '12px Arial';
-		var labelx = 2010 + 2*i;
-		ctx.fillText(labelx.toString(), (100 + i*(width-125)/numx), 40 + (height-75)/2 + pad);
-	}
-	
-	var j;
-	for (j = 1; j <= numy; j++) {
-		ctx.beginPath();
-		ctx.moveTo(100 - 4, (25 + (numy-j)*(height-75)/numy));
-		ctx.lineTo(100 + 4, (25 + (numy-j)*(height-75)/numy));
-		ctx.stroke();
+		ctx.font = '15px Arial';
+		ctx.fillText('Total Renewable Energy Production vs. CO2 Emissions between ' + y1 + ' and ' + y2, width/2, 25);
+
+		ctx.save(); 
+		ctx.textAlign = "center"; 
+		ctx.font = '15px Arial'; 
+		ctx.rotate(-Math.PI/2); 
+		ctx.fillText("Percent Change", -height/2 - pad, 50); 
+		ctx.restore();
+
+		ctx.textAlign = "center";
+		ctx.font = '15px Arial';
+		ctx.fillText("Year", width/2 + 50, 75 + (height-75)/2 + pad);
 		
-		var n = -16+4*j;
-		var n_string = n.toString();
 		ctx.textAlign = "center";
 		ctx.font = '12px Arial';
-		ctx.fillText(n_string, 85, (25 + (numy-j)*(height-75)/numy) + 5);
-	}	
-}
+		ctx.fillText("-8", 85, height-50);
 
-function drawData(num, numx, data, color) {
-	var i;
-	ctx.beginPath();
-	for (i = 0; i < num-1; i++) {
-		ctx.moveTo((100 + i*(width-125)/numx), (25 + ((16 - data[i])/32)*(height - 50 - 25)) + pad );
-		ctx.lineTo((100 + (i+1)*(width-125)/numx), (25 + ((16 - data[i+1])/32)*(height - 50 - 25)) + pad );
-		ctx.strokeStyle = color;
-		ctx.stroke();
+
+		var xmul = 1;
+		var i;
+		for (i = 1; i <= numx; i++) {
+			ctx.beginPath();
+			ctx.moveTo((100 + i*(width-125)/numx), 25 + (height-75)/2 - 4 + pad);
+			ctx.lineTo((100 + i*(width-125)/numx), 25 + (height-75)/2 + 4 + pad);
+			ctx.stroke();
+			
+			ctx.textAlign = "center";
+			ctx.font = '12px Arial';
+			var labelx = Number(y1) + xmul*i;
+			ctx.fillText(labelx.toString(), (100 + i*(width-125)/numx), 40 + (height-75)/2 + pad);
+		}
+		
+		var j;
+		for (j = 1; j <= numy; j++) {
+			ctx.beginPath();
+			ctx.moveTo(100 - 4, (25 + (numy-j)*(height-75)/numy));
+			ctx.lineTo(100 + 4, (25 + (numy-j)*(height-75)/numy));
+			ctx.stroke();
+			
+			var n = -8+4*j;
+			var n_string = n.toString();
+			ctx.textAlign = "center";
+			ctx.font = '12px Arial';
+			ctx.fillText(n_string, 85, (25 + (numy-j)*(height-75)/numy) + 5);
+		}	
 	}
+
+	function drawData(num, numx, data, color) {
+		var i;
+		ctx.beginPath();
+		for (i = 0; i < num-1; i++) {
+			ctx.moveTo((100 + i*(width-125)/numx), (25 + ((16 - data[i])/32)*(height - 50 - 25)) + pad );
+			ctx.lineTo((100 + (i+1)*(width-125)/numx), (25 + ((16 - data[i+1])/32)*(height - 50 - 25)) + pad );
+			ctx.strokeStyle = color;
+			ctx.stroke();
+		}
+	}
+
+	const renewable_change = [];
+
+	for (var i=1; i < renewable.length; i++){
+		var j = 100*(renewable[i] - renewable[i-1])/ renewable[i-1];
+		renewable_change.push(j);
+	}
+
+	var data_step = y2-y1+1;
+	var num_dat = y2-y1+1;
+	drawGraph(y2-y1+1, 6, y1.toString(), y2.toString());
+	drawData(num_dat, data_step, CO2, "#9b24f0");
+	drawData(num_dat, data_step, renewable_change, "#e0321b");
 }
 
-const renewable_change = [];
+proxy();
 
-for (i=1; i < renewable.length; i++){
-    var j = 100*(renewable[i] - renewable[i-1])/ renewable[i-1];
-    renewable_change.push(j);
-}
-
-
-drawGraph(6, 8, y1.toString(), y2.toString());
-drawData(10, 10, C02, "#9b24f0");
-drawData(10, 10, renewable_change, "#e0321b");
-
-
+start.addEventListener('input', proxy);
+end.addEventListener('input', proxy);
 
 </script>
 
