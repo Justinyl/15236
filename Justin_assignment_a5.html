@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf8">
+	<title>Is penalty shootout fair?</title>
+    <style>
+        body {
+            /* page should fill the browser exactly: */
+            width:100vw;
+            height:100vh;
+            overflow:hidden;
+    
+            /* items should be aligned as a series of boxes, vertically: */
+            /* more about flex layouts: https://css-tricks.com/snippets/css/a-guide-to-flexbox/  */
+            display:flex;
+            flex-flow:column;
+            /* items should be centered left/right: */
+            align-items:center;
+            /* items should be centered up/down: */
+            justify-content:center;
+    
+            /* dark background to highlight our drawing: */
+            background:#B3B2B2;
+            color:#111;
+        }
+        h1 {
+            display:block;
+        }
+        #result_plot {
+            display:block;
+        }
+        </style>
+</head>
+
+    </head>
+
+    <body>
+        <h1> So you want a different voting system?</h1>
+        <p>     Currently, the U.S. uses a voting system called first-past-the-post system, and there has been some criticism that this voting system
+            fails to reflect popular vote when voters of the third candidate has a clear preference between the other two. As a result, ranked-choice
+            voting has been proposed as an alternative. while it's obvious that ranked-choice voting can address this problem when the third party is
+            small, is it still effective when a third party is competitive?
+        </p>
+        <p style="text-align:left;"> In the following, we have a left-wing candidate A, candidate party B, and a moderate candidate C. we have the following distribution of votes: <br>
+                A : voters that will always vote for A, and if possible, cast their second preference to C. <br>
+                B : voters that will always vote for B, and if possible, cast their second preference to C. <br>
+                C : voters that will always vote for C, and a proportion of them cast their second preference to A, the rest B. <br>
+                l : voters that support A, but may tactically vote for C and make A their second choice. <br>
+                r : voters that support B, but may tactically vote for C and make B their second choice. <br>
+        We know that the distribution of voters follows 25% A, 27% B, 28% C, <input id="l_id" type = "number" value = "10" step="1" min = "0" max="20">% l and the rest r. We also know
+        that for voter type C, <input id="c_id" type = "number" value = "60" step="5" min = "0" max="100">% will make A their second preference.
+        </p>
+    <canvas id="result_plot" width="900" height="400"></canvas>
+    <script>
+    /* Help: https://www.w3schools.com/jsref/ */
+    function update(){
+        // const BT = document.getElementById("sim");
+        const lnb = document.getElementById("l_id");
+        const pnb = document.getElementById("c_id");
+        const canvas = document.getElementById("result_plot");
+        const width = canvas.width;
+        const height = canvas.height;
+        const ctx = canvas.getContext('2d');
+
+        ctx.fillStyle = '#ffffff';
+	    ctx.fillRect(0, 0, width, height);
+         
+        /* Model Construction*/
+
+        const a_num = 25;
+        const b_num = 27;
+        const c_num = 28;
+        const l_num = Number(lnb.value);
+        const r_num = 20 - l_num;
+        const pr = Number(pnb.value);
+
+        class vote {
+            constructor(n, t) {
+                this.n = n;
+                this.t = t;
+            }
+        }
+
+        var A = new vote(a_num, false);
+        var B = new vote(b_num, false);
+        var C = new vote(c_num, false);
+    
+        function small(a,b,c){
+            if (a < b && a < c){ return 0;}
+            if (b < a && b < c){ return 1;}
+            else {return 2;}
+        }
+
+        function big(a,b,c){
+            if (a > b && a > c){ return 0;}
+            if (b > a && b > c){ return 1;}
+            else {return 2;}
+        }
+
+        function get_vote(A,B,C, l, r, pr){
+            const tab = [[0,0,0], [0,0,0]];
+            tab[0][0] = A.n;
+            tab[0][1] = B.n;
+            tab[0][2] = C.n ; 
+            tab[1][0] = C.n*pr;
+            tab[1][1] = C.n - C.n*pr;
+            tab[1][2] = A.n + B.n;
+            if (l.t){
+                tab[0][2] += l.n;
+                tab[1][0] += l.n;
+            }
+            else{
+                tab[0][0] += l.n;
+                tab[1][2] += l.n;
+            }
+            if (r.t){   
+                tab[0][2] += r.n;
+                tab[1][1] += r.n;
+            }
+            else{
+                tab[0][1] += r.n;
+                tab[1][2] += r.n;
+            }
+            return tab;
+        }
+
+        function count_vote(tab){
+            var fv = tab[0]
+            var sv = tab[1]
+            if (small(fv[0], fv[1], fv[2]) == 0){
+                var b = tab[0][1] + sv[1];
+                var c = tab[0][2] + sv[2];
+                if (b>c){return 'B';} 
+                else {return 'C';}
+            }
+            else if (small(fv[0], fv[1], fv[2]) == 1){
+                var a = tab[0][0] + sv[0];
+                var c = tab[0][2] + sv[2];
+                if (a>c){ return 'A';} 
+                else{ return 'C';}
+            }
+            else{
+                var a = tab[0][0] + sv[0];
+                var b = tab[0][1] + sv[1];
+                if (a>b){   return 'A';}
+                else{     return 'B';}
+            }
+        }
+
+        function ranked_election(A,B,C, l, r, pr){
+            return count_vote(get_vote(A,B,C, l, r, pr));}
+
+        function fptp_election(A,B,C, l, r, pr){
+            fptp_res = get_vote(A,B,C, l, r, pr)[0];
+            res = big(fptp_res[0], fptp_res[1], fptp_res[2]);
+            if (res == 0){return 'A';}
+            if (res == 1){return 'B';}
+            return 'C';
+            }
+
+        var res1 = [['',''], ['','']];
+        var res2 = [['',''], ['','']];
+
+        var lt = new vote(l_num, true);
+        var ln = new vote(l_num, false);
+        var rt = new vote(r_num, true);
+        var rn = new vote(r_num, false);
+
+        res1[0][0] = ranked_election(A,B,C, ln, rn, pr);
+        res1[0][1] = ranked_election(A,B,C, lt, rn, pr);
+        res1[1][0] = ranked_election(A,B,C, ln, rt, pr);
+        res1[1][1] = ranked_election(A,B,C, lt, rt, pr);
+
+        res2[0][0] = fptp_election(A,B,C, ln, rn, pr);
+        res2[0][1] = fptp_election(A,B,C, lt, rn, pr);
+        res2[1][0] = fptp_election(A,B,C, ln, rt, pr);
+        res2[1][1] = fptp_election(A,B,C, lt, rt, pr);
+    
+        
+
+        /* Finish with model*/
+        
+        /* Presenting result*/
+
+        function draw_matrix(ctx, lux, luy, w, h, wid){
+            ctx.beginPath();
+	        ctx.moveTo(lux, luy);
+            ctx.lineTo(lux + w, luy);
+            ctx.lineTo(lux + w, luy + h);
+            ctx.lineTo(lux, luy + h);
+            ctx.lineTo(lux, luy);
+            ctx.moveTo(lux + w/2, luy);
+            ctx.lineTo(lux + w/2, luy + h);
+            ctx.moveTo(lux, luy + h/2);
+            ctx.lineTo(lux + w, luy + h/2);
+            ctx.lineWidth = wid;
+	        ctx.stroke();
+        }   
+
+        function add_text(ctx, ft, fs, txt, x, y){
+            ctx.font = ft;
+            ctx.fillStyle = fs;
+            ctx.fillText(txt, x, y);
+        }
+
+        function add_result(ctx, res, lux, luy, w, h, scale){
+            const s00 = res[0][0];
+            const s01 = res[0][1];
+            const s10 = res[1][0];
+            const s11 = res[1][1];
+            ctx.font = ctx.font * scale;
+            ctx.fillText(s00, lux+w/4, luy+h/4);
+            ctx.fillText(s01, lux+3*w/4, luy+h/4);
+            ctx.fillText(s10, lux+w/4, luy+3*h/4);
+            ctx.fillText(s11, lux+3*w/4, luy+3*h/4);
+        }
+
+        font = '20px Arial';
+        fillStyle = "black";
+        ctx.font = font;
+        ctx.fillStyle = fillStyle;
+        
+        draw_matrix(ctx, 100, 50, 300, 300);
+        add_result(ctx, res1, 50, 50, 300, 300, 1);
+
+        draw_matrix(ctx, 500, 50, 300, 300);
+        add_result(ctx, res2, 500, 50, 300, 300, 1);
+
+        font = '20px Arial';
+
+        add_text(ctx, font, fillStyle, 'l', 250, 25);
+        add_text(ctx, font, fillStyle, 'False',150, 35);
+        add_text(ctx, font, fillStyle, 'True', 300, 35);
+
+        add_text(ctx, font, fillStyle, 'l', 650, 25);
+        add_text(ctx, font, fillStyle, 'False',550, 35);
+        add_text(ctx, font, fillStyle, 'True', 700, 35);
+
+        add_text(ctx, font, fillStyle, 'Tactical', 5, 20);
+        add_text(ctx, font, fillStyle, 'Voting', 7, 40);
+
+        add_text(ctx, font, fillStyle, 'Tactical', 415, 20);
+        add_text(ctx, font, fillStyle, 'Voting', 417, 40);
+
+        ctx.rotate(-Math.PI/2); 
+        add_text(ctx, font, fillStyle, 'r', -200, 25);
+        add_text(ctx, font, fillStyle, 'False',-150, 55);
+        add_text(ctx, font, fillStyle, 'True', -300, 55);
+
+        add_text(ctx, font, fillStyle, 'r', -200, 450);
+        add_text(ctx, font, fillStyle, 'False',-150, 475);
+        add_text(ctx, font, fillStyle, 'True', -300, 475);
+
+        ctx.restore();
+
+        1 == 1;
+        
+    }
+
+
+    function present(){
+        update();
+        1 == 1 ;
+    }   
+    present();
+    l_id.addEventListener('input', present);
+    c_id.addEventListener('input', present);
+    </script>
+    </body>
+</html>
