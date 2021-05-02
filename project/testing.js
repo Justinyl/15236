@@ -9,6 +9,10 @@
         this.vote = nv;
     }
 
+    set_vote(nv){
+        this.vote = nv;
+    }
+
     gt(other){
         return this.vote > other.vote;
     }
@@ -113,6 +117,21 @@ class Ballot{
         }
         return 
     }
+
+    preprocess_vote(loyal_precentages){
+        for (let i=0; i<this.parties.length; i++){
+            for (let j=0; j<this.parties[i].members.length; j++)
+            {
+                var coef = 2 * bm_transform();
+                var nv_tot = this.parties[i].members[j].vote;
+                var nv = loyal_precentages[i]*nv_tot;
+                nv += Math.ceil((nv_tot - nv)*coef);
+                this.parties[i].members[j].set_vote(nv);
+                1 == 1;
+            }
+        }
+        return
+    }
 }
 
 class election{
@@ -132,7 +151,7 @@ class election{
 class SMD_election extends election{
 // Single member district(base case)
     constructor(init_election, pars = null){
-        super(init_election, pars = null);
+        super(init_election, pars = pars);
     }
 
     count(){
@@ -176,7 +195,7 @@ function zeros(size){
 class PLPR_election extends election{
 // Party-list proportional representation
     constructor(init_election, pars = null){
-        super(init_election, pars = null);
+        super(init_election, pars = pars);
     }
 
     count(){
@@ -267,6 +286,27 @@ class result{
         this.party_name = pn;
     }
 }
+
+
+// Helper functions for processing vote data for simulation
+// Box_Muller transform for normal distributuion
+
+function bm_transform() {
+    let u = 0, v = 0;
+    while(u === 0) u = Math.random(); //Converting [0,1) to (0,1)
+    while(v === 0) v = Math.random();
+    let num = Math.sqrt( -2.0 * Math.log( u ) ) * Math.cos( 2.0 * Math.PI * v );
+    num = num / 10.0 + 0.5; // Translate to 0 -> 1
+    if (num > 1 || num < 0) return randn_bm() // resample between 0 and 1
+    return num
+  }
+
+// function rdn_vote(coef){
+//     var nv_tot = this.parties[i].members[j].vote;
+//     var nv = loyal_precentages[i]*nv_tot;
+//     nv += Math.ceil((nv_tot - nv)*coef);
+//     this.parties[i].members[j].set_vote(nv);
+// }
 
 // Constructing geometry of the election map
 
@@ -362,18 +402,20 @@ function present(gen, res, pad_coef = 0.1){
     gen(ctx, width, height, res, pad_coef = pad_coef);
 }
 
-// var elec1 = new SMD_election(oregon_2020);
-// var elec2 = new PLPR_election(oregon_2020);
 
-var elec1 = new SMD_election(parse_data, pars = 'NJ2020.csv'); //loading files
-var elec2 = new PLPR_election(parse_data, pars = 'NJ2020.csv');
+var elec1 = new SMD_election(oregon_2020, pars = [0.7,0.7,0.7,0.7]);
+var elec2 = new PLPR_election(oregon_2020, pars = [1,1,1,1]);
+// loading files
+// var elec1 = new SMD_election(parse_data, pars = 'NJ2020.csv');
+// var elec2 = new PLPR_election(parse_data, pars = 'NJ2020.csv');
 
 elec1.count();
+console.log(elec1.result.districts[4].candidates[0].view());
+console.log(elec1.result.districts[4].candidates[1].view());
 elec2.count();
 res1 = elec1.report(); // Note: Traditional(multidistrict)
-res2 = elec2.report(); // Note: Traditional(Party-proportional single district)
-present(gen_oregon, res1, 0.05, 0.05); // Note: Change this to change system of election
-
+res2 = elec2.report(); // Note: Party-proportional single district
+present(gen_election_res, res1);
 
 // test case
 // test case init
@@ -387,7 +429,7 @@ function find_party(pn){
 
 
 async function parse_data(fname){
-    const response  = await fetch('./' + fname);
+    const response  = await fetch(fname);
     const data = await response.text();
 
     const rows = data.split('\n').slice(1);
@@ -422,13 +464,14 @@ async function parse_data(fname){
             candidates.push(new Candidate('Dem ' + i.toString(), districts[i], DEM, lvotes[i]));
         }     
     }
-    var res = new Ballot(districts, parties, candidates);
+    var res = new Bal
+    t(districts, parties, candidates);
     res.set_seats(num_dist);
     return res;
 }
 
 
-function oregon_2020(pars = None){
+function oregon_2020(loyal_percentages = [1,1,1,1]){
     var Dst1 = new District('District One');
     var Dst2 = new District('District Two');
     var Dst3 = new District('District Three');
@@ -450,7 +493,8 @@ function oregon_2020(pars = None){
     var R2 = new Candidate('R2', Dst2, REP, 273835); 
     var R3 = new Candidate('R3', Dst3, REP, 110570); 
     var R4 = new Candidate('R4', Dst4, REP, 216081); 
-    var R5 = new Candidate('R5', Dst5, REP, 204372); 
+    // var R5 = new Candidate('R5', Dst5, REP, 204372);  //change this back
+    var R5 = new Candidate('R5', Dst5, REP, 234863); 
 
     var L2 = new Candidate('L2', Dst2, LIB, 14094);  
     var L3 = new Candidate('L3', Dst3, LIB, 6869); 
@@ -460,6 +504,7 @@ function oregon_2020(pars = None){
     var candidates = [D1, D2, D3, D4, D5, R1, R2, R3, R4, R5, L2, L3, L5, P3, P4];
     var res = new Ballot(districts, parties, candidates);
     res.set_seats(5);
+    res.preprocess_vote(loyal_percentages);
     return res;
 }
 
