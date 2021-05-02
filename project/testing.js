@@ -381,8 +381,8 @@ present(gen_oregon, res1, 0.05, 0.05); // Note: Change this to change system of 
 
 function find_party(pn){
     const dl = ['Dem'];
-    if (pn in dl){return True;}
-    else{ return False;}
+    if (pn in dl){return true;}
+    else{ return false;}
 }
 
 
