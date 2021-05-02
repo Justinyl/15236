@@ -365,7 +365,7 @@ function present(gen, res, pad_coef = 0.1){
 // var elec1 = new SMD_election(oregon_2020);
 // var elec2 = new PLPR_election(oregon_2020);
 
-var elec1 = new SMD_election(parse_data, pars = 'NJ2020.csv');
+var elec1 = new SMD_election(parse_data, pars = 'NJ2020.csv'); //loading files
 var elec2 = new PLPR_election(parse_data, pars = 'NJ2020.csv');
 
 elec1.count();
@@ -414,12 +414,12 @@ async function parse_data(fname){
     var candidates = []
     for (let i=1; i<num_dist+1; i++){
         if (find_party(candidate_parties[i])){
-            candidates.push(new Candidate('Dem ' + i.toString(), districts[i], DEM, wvote[i]));
-            candidates.push(new Candidate('Rep ' + i.toString(), districts[i], REP, lvote[i]));
+            candidates.push(new Candidate('Dem ' + i.toString(), districts[i], DEM, wvotes[i]));
+            candidates.push(new Candidate('Rep ' + i.toString(), districts[i], REP, lvotes[i]));
         }
         else{
-            candidates.push(new Candidate('Rep ' + i.toString(), districts[i], REP, wvote[i]));
-            candidates.push(new Candidate('Dem ' + i.toString(), districts[i], DEM, lvote[i]));
+            candidates.push(new Candidate('Rep ' + i.toString(), districts[i], REP, wvotes[i]));
+            candidates.push(new Candidate('Dem ' + i.toString(), districts[i], DEM, lvotes[i]));
         }     
     }
     var res = new Ballot(districts, parties, candidates);
