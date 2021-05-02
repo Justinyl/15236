@@ -365,8 +365,8 @@ function present(gen, res, pad_coef = 0.1){
 // var elec1 = new SMD_election(oregon_2020);
 // var elec2 = new PLPR_election(oregon_2020);
 
-var elec1 = new SMD_election(parse_data('NJ2020.csv'));
-var elec2 = new PLPR_election(parse_data('NJ2020.csv'));
+var elec1 = new SMD_election(parse_data, pars = 'NJ2020.csv');
+var elec2 = new PLPR_election(parse_data, pars = 'NJ2020.csv');
 
 elec1.count();
 elec2.count();
