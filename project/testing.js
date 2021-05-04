@@ -1,3 +1,94 @@
+  
+// Databank
+
+const NJ2020 = 
+[
+    {
+      Candidate: "1",
+      District: "1",
+      Party: "Dem",
+      wvote: "240567",
+      lvote: "144463"
+    },
+    {
+      Candidate: "1",
+      District: "2",
+      Party: "Rep",
+      wvote: "195526",
+      lvote: "173849"
+    },
+    {
+      Candidate: "1",
+      District: "3",
+      Party: "Dem",
+      wvote: "229840",
+      lvote: "196327"
+    },
+    {
+      Candidate: "1",
+      District: "4",
+      Party: "Rep",
+      wvote: "254103",
+      lvote: "162420"
+    },
+    {
+      Candidate: "1",
+      District: "5",
+      Party: "Dem",
+      wvote: "225175",
+      lvote: "193333"
+    },
+    {
+      Candidate: "1",
+      District: "6",
+      Party: "Dem",
+      wvote: "199648",
+      lvote: "126760"
+    },
+    {
+      Candidate: "1",
+      District: "7",
+      Party: "Dem",
+      wvote: "219629",
+      lvote: "214318"
+    },
+    {
+      Candidate: "1",
+      District: "8",
+      Party: "Dem",
+      wvote: "176758",
+      lvote: "58686"
+    },
+    {
+      Candidate: "1",
+      District: "9",
+      Party: "Dem",
+      wvote: "203674",
+      lvote: "98629"
+    },
+    {
+      Candidate: "1",
+      District: "10",
+      Party: "Dem",
+      wvote: "241522",
+      lvote: "40298"
+    },
+    {
+      Candidate: "1",
+      District: "11",
+      Party: "Dem",
+      wvote: "235163",
+      lvote: "206013"
+    },
+    {
+      Candidate: "1",
+      District: "12",
+      Party: "Dem",
+      wvote: "230883",
+      lvote: "114591"
+    }
+  ]
+
   // Constructing basic classes needed
   class Candidate{
     constructor(nm, dst, pty, nv=0){
@@ -403,11 +494,12 @@ function present(gen, res, pad_coef = 0.1){
 }
 
 
-var elec1 = new SMD_election(oregon_2020, pars = [0.7,0.7,0.7,0.7]);
-var elec2 = new PLPR_election(oregon_2020, pars = [1,1,1,1]);
+// var elec1 = new SMD_election(oregon_2020, pars = [0.7,0.7,0.7,0.7]);
+// var elec2 = new PLPR_election(oregon_2020, pars = [1,1,1,1]);
 // loading files
-// var elec1 = new SMD_election(parse_data, pars = 'NJ2020.csv');
-// var elec2 = new PLPR_election(parse_data, pars = 'NJ2020.csv');
+//import { NJ2020 } from './data_bank.js'
+var elec1 = new SMD_election(parse_data, pars = NJ2020);
+var elec2 = new PLPR_election(parse_data, pars = NJ2020);
 
 elec1.count();
 console.log(elec1.result.districts[4].candidates[0].view());
@@ -422,39 +514,32 @@ present(gen_election_res, res1);
 
 
 function find_party(pn){
-    const dl = ['Dem'];
-    if (pn in dl){return true;}
+    const dl = 'Dem';
+    if (pn == dl){return true;}
     else{ return false;}
 }
 
 
-async function parse_data(fname){
-    const response  = await fetch(fname);
-    const data = await response.text();
-
-    const rows = data.split('\n').slice(1);
-    const candidate_names = [];
+function parse_data(arr){
     const candidate_parties = [];
     const wvotes = [];
     const lvotes = [];
     var num_dist = 0;
-    for (let i=0; i<rows.length; i++){
-        const row = rows[i].split(',');
-        // candidate_names.push(row[2] + ' ' + row[1]);
-        candidate_parties.push(row[2]);
-        wvotes.push(parseInt(row[3]));
-        lvotes.push(parseInt(row[4]));
+    for (let i=0; i<arr.length; i++){
+        candidate_parties.push(arr[i]['Party']);
+        wvotes.push(parseInt(arr[i]['wvote']));
+        lvotes.push(parseInt(arr[i]['lvote']));
         num_dist += 1;
     }
     var REP = new Party('Republican');
     var DEM = new Party('Democrat');
     var parties = [REP, DEM]; 
     var districts = []
-    for (let i=1; i<num_dist+1; i++){
-        districts.push(new District('District ' + i.toString()));
+    for (let i=0; i<num_dist; i++){
+        districts.push(new District('District ' + (i+1).toString()));
     }
     var candidates = []
-    for (let i=1; i<num_dist+1; i++){
+    for (let i=0; i<num_dist; i++){
         if (find_party(candidate_parties[i])){
             candidates.push(new Candidate('Dem ' + i.toString(), districts[i], DEM, wvotes[i]));
             candidates.push(new Candidate('Rep ' + i.toString(), districts[i], REP, lvotes[i]));
@@ -464,8 +549,7 @@ async function parse_data(fname){
             candidates.push(new Candidate('Dem ' + i.toString(), districts[i], DEM, lvotes[i]));
         }     
     }
-    var res = new Bal
-    t(districts, parties, candidates);
+    var res = new Ballot(districts, parties, candidates);
     res.set_seats(num_dist);
     return res;
 }
