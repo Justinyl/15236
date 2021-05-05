@@ -1,0 +1,4180 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v3.8.5">
+    <title>Voting Final Project</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/jumbotron/">
+
+    <!-- Bootstrap core CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+	body {
+	padding-top: 200px;
+        background-image: url("voting_background.jpg");
+        height: 1100px;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+	background-color: #f5f3f4;
+      }
+    </style>
+
+  </head>
+  <body>
+<main role="main">
+<div class="jumbotron">
+    <div class="container">
+    <b><center><h1 class="display-3">The Effects of Different Election System</h1></center></b>
+</div>
+  </div>
+<div style="height:400px; width:100%; clear:both;"></div>
+<h2>Background</h2>
+<h3>Single Member District</h3>
+<p>
+This method of voting is the current electoral system used to elect the U.S. House of Representatives and many state legislatures. 
+The method consists of dividing the states into areas called districts, and voters are only allowed to vote for their district's representative.
+The winner of the district election is the candidate with the highest amount of votes in that district. While this method of voting has been the 
+most commmonly used method of voting in the U.S., there are some drawbacks to this. One could manipulate the district boundaries to ensure a
+candidate has a higher vote count in the altered district. This is called gerrymandering. Another drawback is that the winner most likely does
+not have the majority of the votes (>50%). This can be fixed by proposing a two-round runoff system where the two highest voted candidates
+are voted for after the initial single member district election.
+</p>
+<h3>Party-list Proportional Representation</h3>
+<p>
+Party-list proportional representation uses districts similar to single member district, but instead of electing a single member, multiple members
+are elected in the same election. The available seats are also divided up based on the proportion of votes that parties receive through their
+candidates. This voting system is widely used in European democracies and other countries that have been recently democratized.
+</p>
+<h3>Mixed System</h3>
+<p>The mixed system is a combination of the single member district voting and the party-list proportional representation. Voters are allowed two votes, 
+one to vote for the the district representative, and the other to vote for a list of candidates all in the same party. Both the votes of the district representatives
+and the party list votes are incorporated in calculating the overall votes for a seat, and how the votes are calculated differs from country to country.</p>
+<h3>Non-district voting</h3>
+<p>Non-district Voting is the system where votes are not calcuated within each district but within the overall states. </p>
+<h2>Simulate the voting system</h2>
+<p>
+Here you can simulate the elections of previous years in different states with different voting systems and compare with the election results of that
+same year. The inputs of the simulation consist of the voting method used on the election data of 2020, the specific state to simulate, the "loyalty" percentages, and the number of simulations.
+The loyalty percentage is the percentage of voters that will remain loyal to the party that they voted for in the 2020 elections, while the other voters are swing voters
+that are simulated using normal distributions. The number of simulations is used when generating a graph of statistics of the indicated number of simulations.
+</p>
+<fieldset>
+<p>
+<select name="system" id="system">
+	<option value="SMD">Single Member District</option>
+	<option value="mixed">Mixed System</option>
+	<option value="PLPR">Party Block</option>
+	<option value="ND">Non-district</option>
+</select>
+<select name="state" id="state">
+	<option value="alabama">Alabama</option>
+	<option value="alaska">Alaska</option>
+	<option value="arizona">Arizona</option>
+	<option value="arkansas">Arkansas</option>
+	<option value="california">California</option>
+	<option value="connecticut">Connecticut</option>
+	<option value="deleware">Deleware</option>
+	<option value="florida">Florida</option>
+	<option value="georgia">Georgia</option>
+	<option value="hawaii">Hawaii</option>
+	<option value="idaho">Idaho</option>
+	<option value="illinois">Illinois</option>
+	<option value="indiana">Indiana</option>
+	<option value="iowa">Iowa</option>
+	<option value="kansas">Kansas</option>
+	<option value="kentucky">Kentucky</option>
+	<option value="louisiana">Louisiana</option>
+	<option value="maine">Maine</option>
+	<option value="maryland">Maryland</option>
+	<option value="massachusetts">Massachusetts</option>
+	<option value="michigan">Michigan</option>
+	<option value="minnesota">Minnesota</option>
+	<option value="mississippi">Mississippi</option>
+	<option value="missouri">Missouri</option>
+	<option value="montana">Montana</option>
+	<option value="nebraska">Nebraska</option>
+	<option value="nevada">Nevada</option>
+	<option value="new_hampshire">New Hampshire</option>
+	<option value="new_jersey">New Jersey</option>
+	<option value="new_mexico">New Mexico</option>
+	<option value="new_york">New York</option>
+	<option value="north_carolina">North Carolina</option>
+	<option value="north_dakota">North Dakota</option>
+	<option value="ohio">Ohio</option>
+	<option value="oklahoma">Oklahoma</option>
+	<option value="oregon">Oregon</option>
+	<option value="pennsylvania">Pennsylvania</option>
+	<option value="rhode_island">Rhode Island</option>
+	<option value="south_carolina">South Carolina</option>
+	<option value="south_dakota">South Dakota</option>
+	<option value="tennessee">Tennessee</option>
+	<option value="texas">Texas</option>
+	<option value="utah">Utah</option>
+	<option value="vermont">Vermont</option>
+	<option value="virginia">Virginia</option>
+	<option value="washington">Washington</option>
+	<option value="west_virginia">West Virginia</option>
+	<option value="wisconsin">Wisconsin</option>
+	<option value="wyoming">Wyoming</option>
+</select>
+<br>
+Republican loyalty: <input type="number" id="rep_loyalty"
+       min="0" max="100" step = "0.1" value = "50">%
+<br>
+Democratic loyalty: <input type="number" id="dem_loyalty"
+       min="0" max="100" step = "0.1" value = "50">%
+<br>
+Number of Simulations: <input type="number" id="sims" min="1" value="200">
+</p>
+<p>
+<button id="button" type="button">Simulate</button>
+</p>
+</fieldset>
+<div style = "text-align:center;">
+    <canvas id="sim" width="600" height="500"></canvas>
+    <canvas id="map" width="600" height="500"></canvas>
+	<br>
+    <canvas id="stats_plot" width="1400" height="500"></canvas>
+  </div>
+<h2> Our Opinion</h2>
+<p>
+We believe that a good election system should have the following properties: </p> 
+<ul style="list-style-type:none;">
+<li> (1) The election result should reflect the
+true propoortion of the voters according to the 2020 data. </li>
+<li> (2) The election should allow chances to minor parties or independent candidates.</li> 
+</ul>
+<p>
+From our simulation, the party-list proportional
+representation satisfy the first property the best. However, in that way, the second property
+is violted. Therefore, we propose a parallel voting system that splits half of the seats to the
+single member district system and half to party-list proportional representation.
+</p>
+   
+
+<p>Source 1: <a href="http://archive.fairvote.org/?page=765">Single Member District</a><br>
+Source 2: <a href="https://www.fairvote.org/how_proportional_representation_elections_work">Party-list Proportional Representation</a><br>
+Source 3: <a href="https://aceproject.org/main/english/bd/bda01c.htm">Mixed System</a><br>
+</main>
+    <script>
+const alabama_2020 = [
+  {
+    Candidate: "",
+    District: "1",
+    Party: "Rep",
+    wvote: "211825",
+    lvote: "116949"
+  },
+  {
+    Candidate: "",
+    District: "2",
+    Party: "Rep",
+    wvote: "197996",
+    lvote: "105286"
+  },
+  {
+    Candidate: "",
+    District: "3",
+    Party: "Rep",
+    wvote: "217384",
+    lvote: "104595"
+  },
+  {
+    Candidate: "",
+    District: "4",
+    Party: "Rep",
+    wvote: "261553",
+    lvote: "56237"
+  },
+  {
+    Candidate: "",
+    District: "5",
+    Party: "Rep",
+    wvote: "253094",
+    lvote: "0"
+  },
+  {
+    Candidate: "",
+    District: "6",
+    Party: "Rep",
+    wvote: "274160",
+    lvote: "0"
+  },
+  {
+    Candidate: "",
+    District: "7",
+    Party: "Dem",
+    wvote: "225742",
+    lvote: "0"
+  }
+];
+
+const arkansas_2020 = 
+[
+  {
+    Candidate: "",
+    District: "1",
+    Party: "Rep",
+    wvote: "237596",
+    lvote: "0"
+  },
+  {
+    Candidate: "",
+    District: "2",
+    Party: "Rep",
+    wvote: "184093",
+    lvote: "148410"
+  },
+  {
+    Candidate: "",
+    District: "3",
+    Party: "Rep",
+    wvote: "214960",
+    lvote: "106325"
+  },
+  {
+    Candidate: "",
+    District: "4",
+    Party: "Rep",
+    wvote: "191617",
+    lvote: "75750"
+  }
+]
+
+const california_2020 = [
+  {
+    Candidate: "",
+    District: "1",
+    Party: "Rep",
+    wvote: "204190",
+    lvote: "154073"
+  },
+  {
+    Candidate: "",
+    District: "2",
+    Party: "Dem",
+    wvote: "294435",
+    lvote: "94320"
+  },
+  {
+    Candidate: "",
+    District: "3",
+    Party: "Dem",
+    wvote: "176036",
+    lvote: "145941"
+  },
+  {
+    Candidate: "",
+    District: "4",
+    Party: "Rep",
+    wvote: "247291",
+    lvote: "194731"
+  },
+  {
+    Candidate: "",
+    District: "5",
+    Party: "Dem",
+    wvote: "271233",
+    lvote: "85227"
+  },
+  {
+    Candidate: "",
+    District: "6",
+    Party: "Dem",
+    wvote: "229648",
+    lvote: "83466"
+  },
+  {
+    Candidate: "",
+    District: "7",
+    Party: "Dem",
+    wvote: "217416",
+    lvote: "166549"
+  },
+  {
+    Candidate: "",
+    District: "8",
+    Party: "Rep",
+    wvote: "158711",
+    lvote: "124400"
+  },
+  {
+    Candidate: "",
+    District: "9",
+    Party: "Dem",
+    wvote: "174252",
+    lvote: "128358"
+  },
+  {
+    Candidate: "",
+    District: "10",
+    Party: "Dem",
+    wvote: "166865",
+    lvote: "135629"
+  },
+  {
+    Candidate: "",
+    District: "11",
+    Party: "Dem",
+    wvote: "271063",
+    lvote: "100293"
+  },
+  {
+    Candidate: "",
+    District: "12",
+    Party: "Dem",
+    wvote: "281776",
+    lvote: "81174"
+  },
+  {
+    Candidate: "",
+    District: "13",
+    Party: "Dem",
+    wvote: "327863",
+    lvote: "34955"
+  },
+  {
+    Candidate: "",
+    District: "14",
+    Party: "Dem",
+    wvote: "278227",
+    lvote: "72684"
+  },
+  {
+    Candidate: "",
+    District: "15",
+    Party: "Dem",
+    wvote: "242991",
+    lvote: "99710"
+  },
+  {
+    Candidate: "",
+    District: "16",
+    Party: "Dem",
+    wvote: "128690",
+    lvote: "88039"
+  },
+  {
+    Candidate: "",
+    District: "17",
+    Party: "Dem",
+    wvote: "212137",
+    lvote: "85199"
+  },
+  {
+    Candidate: "",
+    District: "18",
+    Party: "Dem",
+    wvote: "217377",
+    lvote: "126750"
+  },
+  {
+    Candidate: "",
+    District: "19",
+    Party: "Dem",
+    wvote: "224385",
+    lvote: "88642"
+  },
+  {
+    Candidate: "",
+    District: "20",
+    Party: "Dem",
+    wvote: "236896",
+    lvote: "71658"
+  },
+  {
+    Candidate: "",
+    District: "21",
+    Party: "Rep",
+    wvote: "85928",
+    lvote: "84406"
+  },
+  {
+    Candidate: "",
+    District: "22",
+    Party: "Rep",
+    wvote: "170888",
+    lvote: "144251"
+  },
+  {
+    Candidate: "",
+    District: "23",
+    Party: "Rep",
+    wvote: "190222",
+    lvote: "115896"
+  },
+  {
+    Candidate: "",
+    District: "24",
+    Party: "Dem",
+    wvote: "212564",
+    lvote: "149781"
+  },
+  {
+    Candidate: "",
+    District: "25",
+    Party: "Rep",
+    wvote: "169638",
+    lvote: "169305"
+  },
+  {
+    Candidate: "",
+    District: "26",
+    Party: "Dem",
+    wvote: "208856",
+    lvote: "135877"
+  },
+  {
+    Candidate: "",
+    District: "27",
+    Party: "Dem",
+    wvote: "221411",
+    lvote: "95907"
+  },
+  {
+    Candidate: "",
+    District: "28",
+    Party: "Dem",
+    wvote: "244471",
+    lvote: "91928"
+  },
+  {
+    Candidate: "",
+    District: "29",
+    Party: "Dem",
+    wvote: "119420",
+    lvote: "91524"
+  },
+  {
+    Candidate: "",
+    District: "30",
+    Party: "Dem",
+    wvote: "240038",
+    lvote: "105426"
+  },
+  {
+    Candidate: "",
+    District: "31",
+    Party: "Dem",
+    wvote: "175315",
+    lvote: "110735"
+  },
+  {
+    Candidate: "",
+    District: "32",
+    Party: "Dem",
+    wvote: "172942",
+    lvote: "86818"
+  },
+  {
+    Candidate: "",
+    District: "33",
+    Party: "Dem",
+    wvote: "257094",
+    lvote: "123334"
+  },
+  {
+    Candidate: "",
+    District: "34",
+    Party: "Dem",
+    wvote: "108792",
+    lvote: "96554"
+  },
+  {
+    Candidate: "",
+    District: "35",
+    Party: "Dem",
+    wvote: "169405",
+    lvote: "74941"
+  },
+  {
+    Candidate: "",
+    District: "36",
+    Party: "Dem",
+    wvote: "185051",
+    lvote: "121640"
+  },
+  {
+    Candidate: "",
+    District: "37",
+    Party: "Dem",
+    wvote: "254916",
+    lvote: "41705"
+  },
+  {
+    Candidate: "",
+    District: "38",
+    Party: "Dem",
+    wvote: "190467",
+    lvote: "65739"
+  },
+  {
+    Candidate: "",
+    District: "39",
+    Party: "Rep",
+    wvote: "173946",
+    lvote: "169837"
+  },
+  {
+    Candidate: "",
+    District: "40",
+    Party: "Dem",
+    wvote: "135572",
+    lvote: "50809"
+  },
+  {
+    Candidate: "",
+    District: "41",
+    Party: "Dem",
+    wvote: "167938",
+    lvote: "94289"
+  },
+  {
+    Candidate: "",
+    District: "42",
+    Party: "Rep",
+    wvote: "210274",
+    lvote: "157773"
+  },
+  {
+    Candidate: "",
+    District: "43",
+    Party: "Dem",
+    wvote: "199210",
+    lvote: "78688"
+  },
+  {
+    Candidate: "",
+    District: "44",
+    Party: "Dem",
+    wvote: "139661",
+    lvote: "66375"
+  },
+  {
+    Candidate: "",
+    District: "45",
+    Party: "Dem",
+    wvote: "221843",
+    lvote: "193096"
+  },
+  {
+    Candidate: "",
+    District: "46",
+    Party: "Dem",
+    wvote: "157803",
+    lvote: "71716"
+  },
+  {
+    Candidate: "",
+    District: "47",
+    Party: "Dem",
+    wvote: "197028",
+    lvote: "114371"
+  },
+  {
+    Candidate: "",
+    District: "48",
+    Party: "Rep",
+    wvote: "201738",
+    lvote: "193362"
+  },
+  {
+    Candidate: "",
+    District: "49",
+    Party: "Dem",
+    wvote: "205349",
+    lvote: "181157"
+  },
+  {
+    Candidate: "",
+    District: "50",
+    Party: "Rep",
+    wvote: "195510",
+    lvote: "166859"
+  },
+  {
+    Candidate: "",
+    District: "51",
+    Party: "Dem",
+    wvote: "165596",
+    lvote: "76841"
+  },
+  {
+    Candidate: "",
+    District: "52",
+    Party: "Dem",
+    wvote: "244145",
+    lvote: "152350"
+  },
+  {
+    Candidate: "",
+    District: "53",
+    Party: "Dem",
+    wvote: "199244",
+    lvote: "135614"
+  }
+]
+
+const colorado_2020 = [
+  {
+    Candidate: "",
+    District: "1",
+    Party: "Dem",
+    wvote: "331621",
+    lvote: "105955"
+  },
+  {
+    Candidate: "",
+    District: "2",
+    Party: "Dem",
+    wvote: "316925",
+    lvote: "182547"
+  },
+  {
+    Candidate: "",
+    District: "3",
+    Party: "Rep",
+    wvote: "220634",
+    lvote: "194122"
+  },
+  {
+    Candidate: "",
+    District: "4",
+    Party: "Rep",
+    wvote: "285606",
+    lvote: "173945"
+  },
+  {
+    Candidate: "",
+    District: "5",
+    Party: "Rep",
+    wvote: "249013",
+    lvote: "161600"
+  },
+  {
+    Candidate: "",
+    District: "6",
+    Party: "Dem",
+    wvote: "250314",
+    lvote: "175192"
+  },
+  {
+    Candidate: "",
+    District: "7",
+    Party: "Dem",
+    wvote: "250525",
+    lvote: "159301"
+  }
+]
+
+const connecticut_2020 = [
+  {
+    Candidate: "",
+    District: "1",
+    Party: "Dem",
+    wvote: "222668",
+    lvote: "122111"
+  },
+  {
+    Candidate: "",
+    District: "2",
+    Party: "Dem",
+    wvote: "217982",
+    lvote: "140340"
+  },
+  {
+    Candidate: "",
+    District: "3",
+    Party: "Dem",
+    wvote: "203265",
+    lvote: "137596"
+  },
+  {
+    Candidate: "",
+    District: "4",
+    Party: "Dem",
+    wvote: "223832",
+    lvote: "130627"
+  },
+  {
+    Candidate: "",
+    District: "5",
+    Party: "Dem",
+    wvote: "192484",
+    lvote: "151988"
+  }
+]
+
+const florida_2020 = [
+  {
+    Candidate: "",
+    District: "1",
+    Party: "Rep",
+    wvote: "283352",
+    lvote: "149172"
+  },
+  {
+    Candidate: "",
+    District: "2",
+    Party: "Rep",
+    wvote: "305337",
+    lvote: "6662"
+  },
+  {
+    Candidate: "",
+    District: "3",
+    Party: "Rep",
+    wvote: "223075",
+    lvote: "167326"
+  },
+  {
+    Candidate: "",
+    District: "4",
+    Party: "Rep",
+    wvote: "308497",
+    lvote: "196423"
+  },
+  {
+    Candidate: "",
+    District: "5",
+    Party: "Dem",
+    wvote: "219463",
+    lvote: "117510"
+  },
+  {
+    Candidate: "",
+    District: "6",
+    Party: "Rep",
+    wvote: "265393",
+    lvote: "172305"
+  },
+  {
+    Candidate: "",
+    District: "7",
+    Party: "Dem",
+    wvote: "224946",
+    lvote: "175750"
+  },
+  {
+    Candidate: "",
+    District: "8",
+    Party: "Rep",
+    wvote: "282093",
+    lvote: "177695"
+  },
+  {
+    Candidate: "",
+    District: "9",
+    Party: "Dem",
+    wvote: "240724",
+    lvote: "188889"
+  },
+  {
+    Candidate: "",
+    District: "10",
+    Party: "Dem",
+    wvote: "239434",
+    lvote: "136889"
+  },
+  {
+    Candidate: "",
+    District: "11",
+    Party: "Rep",
+    wvote: "316979",
+    lvote: "158094"
+  },
+  {
+    Candidate: "",
+    District: "12",
+    Party: "Rep",
+    wvote: "284941",
+    lvote: "168194"
+  },
+  {
+    Candidate: "",
+    District: "13",
+    Party: "Dem",
+    wvote: "215405",
+    lvote: "190713"
+  },
+  {
+    Candidate: "",
+    District: "14",
+    Party: "Dem",
+    wvote: "224240",
+    lvote: "147896"
+  },
+  {
+    Candidate: "",
+    District: "15",
+    Party: "Rep",
+    wvote: "216374",
+    lvote: "174297"
+  },
+  {
+    Candidate: "",
+    District: "16",
+    Party: "Rep",
+    wvote: "269001",
+    lvote: "215683"
+  },
+  {
+    Candidate: "",
+    District: "17",
+    Party: "Rep",
+    wvote: "266514",
+    lvote: "140487"
+  },
+  {
+    Candidate: "",
+    District: "18",
+    Party: "Rep",
+    wvote: "253286",
+    lvote: "186674"
+  },
+  {
+    Candidate: "",
+    District: "19",
+    Party: "Rep",
+    wvote: "272440",
+    lvote: "172146"
+  },
+  {
+    Candidate: "",
+    District: "20",
+    Party: "Dem",
+    wvote: "253661",
+    lvote: "68748"
+  },
+  {
+    Candidate: "",
+    District: "21",
+    Party: "Dem",
+    wvote: "237925",
+    lvote: "157612"
+  },
+  {
+    Candidate: "",
+    District: "22",
+    Party: "Dem",
+    wvote: "235764",
+    lvote: "166553"
+  },
+  {
+    Candidate: "",
+    District: "23",
+    Party: "Dem",
+    wvote: "221239",
+    lvote: "158874"
+  },
+  {
+    Candidate: "",
+    District: "24",
+    Party: "Dem",
+    wvote: "218825",
+    lvote: "59084"
+  },
+  {
+    Candidate: "",
+    District: "25",
+    Party: "Rep",
+    wvote: "?",
+    lvote: "?"
+  },
+  {
+    Candidate: "",
+    District: "26",
+    Party: "Rep",
+    wvote: "177223",
+    lvote: "165407"
+  },
+  {
+    Candidate: "",
+    District: "27",
+    Party: "Rep",
+    wvote: "176141",
+    lvote: "166758"
+  }
+]
+
+const georgia_2020 = [
+  {
+    Candidate: "",
+    District: "1",
+    Party: "Rep",
+    wvote: "189457",
+    lvote: "135238"
+  },
+  {
+    Candidate: "",
+    District: "2",
+    Party: "Dem",
+    wvote: "161397",
+    lvote: "111620"
+  },
+  {
+    Candidate: "",
+    District: "3",
+    Party: "Rep",
+    wvote: "241526",
+    lvote: "129792"
+  },
+  {
+    Candidate: "",
+    District: "4",
+    Party: "Dem",
+    wvote: "278906",
+    lvote: "69393"
+  },
+  {
+    Candidate: "",
+    District: "5",
+    Party: "Dem",
+    wvote: "301857",
+    lvote: "52646"
+  },
+  {
+    Candidate: "",
+    District: "6",
+    Party: "Dem",
+    wvote: "216775",
+    lvote: "180329"
+  },
+  {
+    Candidate: "",
+    District: "7",
+    Party: "Dem",
+    wvote: "190900",
+    lvote: "180564"
+  },
+  {
+    Candidate: "",
+    District: "8",
+    Party: "Rep",
+    wvote: "198701",
+    lvote: "109264"
+  },
+  {
+    Candidate: "",
+    District: "9",
+    Party: "Rep",
+    wvote: "292750",
+    lvote: "79797"
+  },
+  {
+    Candidate: "",
+    District: "10",
+    Party: "Rep",
+    wvote: "235810",
+    lvote: "142636"
+  },
+  {
+    Candidate: "",
+    District: "11",
+    Party: "Rep",
+    wvote: "245256",
+    lvote: "160623"
+  },
+  {
+    Candidate: "",
+    District: "12",
+    Party: "Rep",
+    wvote: "181038",
+    lvote: "129061"
+  },
+  {
+    Candidate: "",
+    District: "13",
+    Party: "Dem",
+    wvote: "279045",
+    lvote: "81476"
+  },
+  {
+    Candidate: "",
+    District: "14",
+    Party: "Rep",
+    wvote: "229827",
+    lvote: "77798"
+  }
+]
+
+const hawaii_2020 = [
+  {
+    Candidate: "",
+    District: "1",
+    Party: "Dem",
+    wvote: "183245",
+    lvote: "71188"
+  },
+  {
+    Candidate: "",
+    District: "2",
+    Party: "Dem",
+    wvote: "171517",
+    lvote: "84027"
+  }
+]
+
+const illinois_2020 = [
+  {
+    Candidate: "",
+    District: "1",
+    Party: "Dem",
+    wvote: "239943",
+    lvote: "85027"
+  },
+  {
+    Candidate: "",
+    District: "2",
+    Party: "Dem",
+    wvote: "234896",
+    lvote: "63142"
+  },
+  {
+    Candidate: "",
+    District: "3",
+    Party: "Dem",
+    wvote: "172997",
+    lvote: "133851"
+  },
+  {
+    Candidate: "",
+    District: "4",
+    Party: "Dem",
+    wvote: "187219",
+    lvote: "35518"
+  },
+  {
+    Candidate: "",
+    District: "5",
+    Party: "Dem",
+    wvote: "255661",
+    lvote: "96200"
+  },
+  {
+    Candidate: "",
+    District: "6",
+    Party: "Dem",
+    wvote: "213777",
+    lvote: "183891"
+  },
+  {
+    Candidate: "",
+    District: "7",
+    Party: "Dem",
+    wvote: "249383",
+    lvote: "41390"
+  },
+  {
+    Candidate: "",
+    District: "8",
+    Party: "Dem",
+    wvote: "186251",
+    lvote: "68327"
+  },
+  {
+    Candidate: "",
+    District: "9",
+    Party: "Dem",
+    wvote: "262045",
+    lvote: "107125"
+  },
+  {
+    Candidate: "",
+    District: "10",
+    Party: "Dem",
+    wvote: "202402",
+    lvote: "114442"
+  },
+  {
+    Candidate: "",
+    District: "11",
+    Party: "Dem",
+    wvote: "194557",
+    lvote: "112807"
+  },
+  {
+    Candidate: "",
+    District: "12",
+    Party: "Rep",
+    wvote: "194839",
+    lvote: "127577"
+  },
+  {
+    Candidate: "",
+    District: "13",
+    Party: "Rep",
+    wvote: "181373",
+    lvote: "151648"
+  },
+  {
+    Candidate: "",
+    District: "14",
+    Party: "Dem",
+    wvote: "203209",
+    lvote: "197835"
+  },
+  {
+    Candidate: "",
+    District: "15",
+    Party: "Rep",
+    wvote: "244947",
+    lvote: "88559"
+  },
+  {
+    Candidate: "",
+    District: "16",
+    Party: "Rep",
+    wvote: "218839",
+    lvote: "119313"
+  },
+  {
+    Candidate: "",
+    District: "17",
+    Party: "Dem",
+    wvote: "156011",
+    lvote: "143863"
+  },
+  {
+    Candidate: "",
+    District: "18",
+    Party: "Rep",
+    wvote: "261840",
+    lvote: "110039"
+  }
+]
+
+const indiana_2020 = [
+  {
+    Candidate: "",
+    District: "1",
+    Party: "Dem",
+    wvote: "185180",
+    lvote: "132247"
+  },
+  {
+    Candidate: "",
+    District: "2",
+    Party: "Rep",
+    wvote: "183601",
+    lvote: "114967"
+  },
+  {
+    Candidate: "",
+    District: "3",
+    Party: "Rep",
+    wvote: "220989",
+    lvote: "104762"
+  },
+  {
+    Candidate: "",
+    District: "4",
+    Party: "Rep",
+    wvote: "225531",
+    lvote: "112984"
+  },
+  {
+    Candidate: "",
+    District: "5",
+    Party: "Rep",
+    wvote: "208212",
+    lvote: "191226"
+  },
+  {
+    Candidate: "",
+    District: "6",
+    Party: "Rep",
+    wvote: "225318",
+    lvote: "91103"
+  },
+  {
+    Candidate: "",
+    District: "7",
+    Party: "Dem",
+    wvote: "176422",
+    lvote: "106146"
+  },
+  {
+    Candidate: "",
+    District: "8",
+    Party: "Rep",
+    wvote: "214643",
+    lvote: "95961"
+  },
+  {
+    Candidate: "",
+    District: "9",
+    Party: "Rep",
+    wvote: "222057",
+    lvote: "122566"
+  }
+]
+
+const kansas_2020 = [
+  {
+    Candidate: "",
+    District: "1",
+    Party: "Rep",
+    wvote: "208229",
+    lvote: "84393"
+  },
+  {
+    Candidate: "",
+    District: "2",
+    Party: "Rep",
+    wvote: "185464",
+    lvote: "136650"
+  },
+  {
+    Candidate: "",
+    District: "3",
+    Party: "Dem",
+    wvote: "220049",
+    lvote: "178773"
+  },
+  {
+    Candidate: "",
+    District: "4",
+    Party: "Rep",
+    wvote: "203432",
+    lvote: "116166"
+  }
+]
+
+const kentucky_2020 = [
+  {
+    Candidate: "",
+    District: "1",
+    Party: "Rep",
+    wvote: "246329",
+    lvote: "82141"
+  },
+  {
+    Candidate: "",
+    District: "2",
+    Party: "Rep",
+    wvote: "255735",
+    lvote: "94643"
+  },
+  {
+    Candidate: "",
+    District: "3",
+    Party: "Dem",
+    wvote: "230672",
+    lvote: "137425"
+  },
+  {
+    Candidate: "",
+    District: "4",
+    Party: "Rep",
+    wvote: "256613",
+    lvote: "125896"
+  },
+  {
+    Candidate: "",
+    District: "5",
+    Party: "Rep",
+    wvote: "250914",
+    lvote: "47056"
+  },
+  {
+    Candidate: "",
+    District: "6",
+    Party: "Rep",
+    wvote: "216948",
+    lvote: "155011"
+  }
+]
+
+const louisiana_2020 = [
+  {
+    Candidate: "",
+    District: "1",
+    Party: "Rep",
+    wvote: "270330",
+    lvote: "94730"
+  },
+  {
+    Candidate: "",
+    District: "2",
+    Party: "Dem",
+    wvote: "201636",
+    lvote: "47575"
+  },
+  {
+    Candidate: "",
+    District: "3",
+    Party: "Rep",
+    wvote: "230480",
+    lvote: "60852"
+  },
+  {
+    Candidate: "",
+    District: "4",
+    Party: "Rep",
+    wvote: "185265",
+    lvote: "78157"
+  },
+  {
+    Candidate: "",
+    District: "5",
+    Party: "Rep",
+    wvote: "49183",
+    lvote: "30124"
+  },
+  {
+    Candidate: "",
+    District: "6",
+    Party: "Rep",
+    wvote: "265706",
+    lvote: "95541"
+  }
+]
+
+const maryland_2020 = [
+  {
+    Candidate: "",
+    District: "1",
+    Party: "Rep",
+    wvote: "250901",
+    lvote: "143877"
+  },
+  {
+    Candidate: "",
+    District: "2",
+    Party: "Dem",
+    wvote: "224836",
+    lvote: "106355"
+  },
+  {
+    Candidate: "",
+    District: "3",
+    Party: "Dem",
+    wvote: "260358",
+    lvote: "112117"
+  },
+  {
+    Candidate: "",
+    District: "4",
+    Party: "Dem",
+    wvote: "282119",
+    lvote: "71671"
+  },
+  {
+    Candidate: "",
+    District: "5",
+    Party: "Dem",
+    wvote: "274210",
+    lvote: "123525"
+  },
+  {
+    Candidate: "",
+    District: "6",
+    Party: "Dem",
+    wvote: "215540",
+    lvote: "143599"
+  },
+  {
+    Candidate: "",
+    District: "7",
+    Party: "Dem",
+    wvote: "237084",
+    lvote: "92825"
+  },
+  {
+    Candidate: "",
+    District: "8",
+    Party: "Dem",
+    wvote: "274716",
+    lvote: "127157"
+  }
+]
+
+const massachusetts_2020 = [
+  {
+    Candidate: "",
+    District: "1",
+    Party: "Dem",
+    wvote: "275376",
+    lvote: "9956"
+  },
+  {
+    Candidate: "",
+    District: "2",
+    Party: "Dem",
+    wvote: "249854",
+    lvote: "132220"
+  },
+  {
+    Candidate: "",
+    District: "3",
+    Party: "Dem",
+    wvote: "286896",
+    lvote: "6643"
+  },
+  {
+    Candidate: "",
+    District: "4",
+    Party: "Dem",
+    wvote: "251102",
+    lvote: "160474"
+  },
+  {
+    Candidate: "",
+    District: "5",
+    Party: "Dem",
+    wvote: "294427",
+    lvote: "101351"
+  },
+  {
+    Candidate: "",
+    District: "6",
+    Party: "Dem",
+    wvote: "286377",
+    lvote: "150695"
+  },
+  {
+    Candidate: "",
+    District: "7",
+    Party: "Dem",
+    wvote: "267362",
+    lvote: "38675"
+  },
+  {
+    Candidate: "",
+    District: "8",
+    Party: "Dem",
+    wvote: "310940",
+    lvote: "72060"
+  },
+  {
+    Candidate: "",
+    District: "9",
+    Party: "Dem",
+    wvote: "260262",
+    lvote: "154261"
+  }
+]
+
+const michigan_2020 = [
+  {
+    Candidate: "",
+    District: "1",
+    Party: "Rep",
+    wvote: "256581",
+    lvote: "153328"
+  },
+  {
+    Candidate: "",
+    District: "2",
+    Party: "Rep",
+    wvote: "238711",
+    lvote: "154122"
+  },
+  {
+    Candidate: "",
+    District: "3",
+    Party: "Rep",
+    wvote: "213649",
+    lvote: "189769"
+  },
+  {
+    Candidate: "",
+    District: "4",
+    Party: "Rep",
+    wvote: "242621",
+    lvote: "120802"
+  },
+  {
+    Candidate: "",
+    District: "5",
+    Party: "Dem",
+    wvote: "196599",
+    lvote: "150772"
+  },
+  {
+    Candidate: "",
+    District: "6",
+    Party: "Rep",
+    wvote: "211496",
+    lvote: "152085"
+  },
+  {
+    Candidate: "",
+    District: "7",
+    Party: "Rep",
+    wvote: "227524",
+    lvote: "159743"
+  },
+  {
+    Candidate: "",
+    District: "8",
+    Party: "Dem",
+    wvote: "217922",
+    lvote: "202525"
+  },
+  {
+    Candidate: "",
+    District: "9",
+    Party: "Dem",
+    wvote: "230318",
+    lvote: "153296"
+  },
+  {
+    Candidate: "",
+    District: "10",
+    Party: "Rep",
+    wvote: "271607",
+    lvote: "138179"
+  },
+  {
+    Candidate: "",
+    District: "11",
+    Party: "Dem",
+    wvote: "226128",
+    lvote: "215405"
+  },
+  {
+    Candidate: "",
+    District: "12",
+    Party: "Dem",
+    wvote: "254957",
+    lvote: "117719"
+  },
+  {
+    Candidate: "",
+    District: "13",
+    Party: "Dem",
+    wvote: "223205",
+    lvote: "53311"
+  },
+  {
+    Candidate: "",
+    District: "14",
+    Party: "Dem",
+    wvote: "271370",
+    lvote: "62664"
+  }
+]
+
+const minnesota_2020 = [
+  {
+    Candidate: "",
+    District: "1",
+    Party: "Rep",
+    wvote: "179234",
+    lvote: "167890"
+  },
+  {
+    Candidate: "",
+    District: "2",
+    Party: "Dem",
+    wvote: "204534",
+    lvote: "194954"
+  },
+  {
+    Candidate: "",
+    District: "3",
+    Party: "Dem",
+    wvote: "246666",
+    lvote: "196625"
+  },
+  {
+    Candidate: "",
+    District: "4",
+    Party: "Dem",
+    wvote: "245813",
+    lvote: "112730"
+  },
+  {
+    Candidate: "",
+    District: "5",
+    Party: "Dem",
+    wvote: "255924",
+    lvote: "102878"
+  },
+  {
+    Candidate: "",
+    District: "6",
+    Party: "Rep",
+    wvote: "270901",
+    lvote: "140853"
+  },
+  {
+    Candidate: "",
+    District: "7",
+    Party: "Rep",
+    wvote: "194066",
+    lvote: "144840"
+  },
+  {
+    Candidate: "",
+    District: "8",
+    Party: "Rep",
+    wvote: "223432",
+    lvote: "147853"
+  }
+]
+
+const mississippi_2020 = [
+  {
+    Candidate: "",
+    District: "1",
+    Party: "Rep",
+    wvote: "228787",
+    lvote: "104008"
+  },
+  {
+    Candidate: "",
+    District: "2",
+    Party: "Dem",
+    wvote: "196224",
+    lvote: "101010"
+  },
+  {
+    Candidate: "",
+    District: "3",
+    Party: "Rep",
+    wvote: "221064",
+    lvote: "120782"
+  },
+  {
+    Candidate: "",
+    District: "4",
+    Party: "Rep",
+    wvote: "255971",
+    lvote: "0"
+  }
+]
+
+const missouri_2020 = [
+  {
+    Candidate: "",
+    District: "1",
+    Party: "Dem",
+    wvote: "249087",
+    lvote: "59940"
+  },
+  {
+    Candidate: "",
+    District: "2",
+    Party: "Rep",
+    wvote: "233157",
+    lvote: "204540"
+  },
+  {
+    Candidate: "",
+    District: "3",
+    Party: "Rep",
+    wvote: "282866",
+    lvote: "116095"
+  },
+  {
+    Candidate: "",
+    District: "4",
+    Party: "Rep",
+    wvote: "245247",
+    lvote: "107635"
+  },
+  {
+    Candidate: "",
+    District: "5",
+    Party: "Dem",
+    wvote: "207180",
+    lvote: "135934"
+  },
+  {
+    Candidate: "",
+    District: "6",
+    Party: "Rep",
+    wvote: "158709",
+    lvote: "118926"
+  },
+  {
+    Candidate: "",
+    District: "7",
+    Party: "Rep",
+    wvote: "254318",
+    lvote: "98111"
+  },
+  {
+    Candidate: "",
+    District: "8",
+    Party: "Rep",
+    wvote: "253811",
+    lvote: "70561"
+  }
+]
+
+const nevada_2020 = [
+  {
+    Candidate: "",
+    District: "1",
+    Party: "Dem",
+    wvote: "137868",
+    lvote: "74490"
+  },
+  {
+    Candidate: "",
+    District: "2",
+    Party: "Rep",
+    wvote: "216078",
+    lvote: "155780"
+  },
+  {
+    Candidate: "",
+    District: "3",
+    Party: "Dem",
+    wvote: "203421",
+    lvote: "190975"
+  },
+  {
+    Candidate: "",
+    District: "4",
+    Party: "Dem",
+    wvote: "168457",
+    lvote: "152284"
+  }
+]
+
+const new_hampshire_2020 = [
+  {
+    Candidate: "",
+    District: "1",
+    Party: "Dem",
+    wvote: "205606",
+    lvote: "185159"
+  },
+  {
+    Candidate: "",
+    District: "2",
+    Party: "Dem",
+    wvote: "207863",
+    lvote: "168491"
+  }
+]
+
+const new_jersey_2020 = [
+  {
+    Candidate: "",
+    District: "1",
+    Party: "Dem",
+    wvote: "240567",
+    lvote: "144463"
+  },
+  {
+    Candidate: "",
+    District: "2",
+    Party: "Rep",
+    wvote: "195526",
+    lvote: "173849"
+  },
+  {
+    Candidate: "",
+    District: "3",
+    Party: "Dem",
+    wvote: "229840",
+    lvote: "196327"
+  },
+  {
+    Candidate: "",
+    District: "4",
+    Party: "Rep",
+    wvote: "254103",
+    lvote: "162420"
+  },
+  {
+    Candidate: "",
+    District: "5",
+    Party: "Dem",
+    wvote: "225175",
+    lvote: "193333"
+  },
+  {
+    Candidate: "",
+    District: "6",
+    Party: "Dem",
+    wvote: "199648",
+    lvote: "126760"
+  },
+  {
+    Candidate: "",
+    District: "7",
+    Party: "Dem",
+    wvote: "219629",
+    lvote: "214318"
+  },
+  {
+    Candidate: "",
+    District: "8",
+    Party: "Dem",
+    wvote: "176758",
+    lvote: "58686"
+  },
+  {
+    Candidate: "",
+    District: "9",
+    Party: "Dem",
+    wvote: "203674",
+    lvote: "98629"
+  },
+  {
+    Candidate: "",
+    District: "10",
+    Party: "Dem",
+    wvote: "241522",
+    lvote: "40298"
+  },
+  {
+    Candidate: "",
+    District: "11",
+    Party: "Dem",
+    wvote: "235163",
+    lvote: "206013"
+  },
+  {
+    Candidate: "",
+    District: "12",
+    Party: "Dem",
+    wvote: "230883",
+    lvote: "114591"
+  }
+]
+
+const new_mexico_2020 = [
+  {
+    Candidate: "",
+    District: "1",
+    Party: "Dem",
+    wvote: "186953",
+    lvote: "134337"
+  },
+  {
+    Candidate: "",
+    District: "2",
+    Party: "Rep",
+    wvote: "142283",
+    lvote: "122546"
+  },
+  {
+    Candidate: "",
+    District: "3",
+    Party: "Dem",
+    wvote: "186282",
+    lvote: "131166"
+  }
+]
+
+const new_york_2020 = [
+  {
+    Candidate: "",
+    District: "1",
+    Party: "Rep",
+    wvote: "205715",
+    lvote: "169294"
+  },
+  {
+    Candidate: "",
+    District: "2",
+    Party: "Rep",
+    wvote: "177379",
+    lvote: "154246"
+  },
+  {
+    Candidate: "",
+    District: "3",
+    Party: "Dem",
+    wvote: "208555",
+    lvote: "161931"
+  },
+  {
+    Candidate: "",
+    District: "4",
+    Party: "Dem",
+    wvote: "199762",
+    lvote: "153007"
+  },
+  {
+    Candidate: "",
+    District: "5",
+    Party: "Dem",
+    wvote: "229125",
+    lvote: "0"
+  },
+  {
+    Candidate: "",
+    District: "6",
+    Party: "Dem",
+    wvote: "158862",
+    lvote: "107735"
+  },
+  {
+    Candidate: "",
+    District: "7",
+    Party: "Dem",
+    wvote: "191073",
+    lvote: "59950"
+  },
+  {
+    Candidate: "",
+    District: "8",
+    Party: "Dem",
+    wvote: "234933",
+    lvote: "79124"
+  },
+  {
+    Candidate: "",
+    District: "9",
+    Party: "Dem",
+    wvote: "230221",
+    lvote: "93230"
+  },
+  {
+    Candidate: "",
+    District: "10",
+    Party: "Dem",
+    wvote: "206310",
+    lvote: "121045"
+  },
+  {
+    Candidate: "",
+    District: "11",
+    Party: "Rep",
+    wvote: "155608",
+    lvote: "134625"
+  },
+  {
+    Candidate: "",
+    District: "12",
+    Party: "Dem",
+    wvote: "265172",
+    lvote: "99157"
+  },
+  {
+    Candidate: "",
+    District: "13",
+    Party: "Dem",
+    wvote: "231841",
+    lvote: "58829"
+  },
+  {
+    Candidate: "",
+    District: "14",
+    Party: "Dem",
+    wvote: "152661",
+    lvote: "108477"
+  },
+  {
+    Candidate: "",
+    District: "15",
+    Party: "Dem",
+    wvote: "169533",
+    lvote: "38894"
+  },
+  {
+    Candidate: "",
+    District: "16",
+    Party: "Dem",
+    wvote: "218514",
+    lvote: "41094"
+  },
+  {
+    Candidate: "",
+    District: "17",
+    Party: "Dem",
+    wvote: "183976",
+    lvote: "117309"
+  },
+  {
+    Candidate: "",
+    District: "18",
+    Party: "Dem",
+    wvote: "187444",
+    lvote: "145145"
+  },
+  {
+    Candidate: "",
+    District: "19",
+    Party: "Dem",
+    wvote: "192100",
+    lvote: "151475"
+  },
+  {
+    Candidate: "",
+    District: "20",
+    Party: "Dem",
+    wvote: "219705",
+    lvote: "139446"
+  },
+  {
+    Candidate: "",
+    District: "21",
+    Party: "Rep",
+    wvote: "188655",
+    lvote: "131995"
+  },
+  {
+    Candidate: "",
+    District: "22",
+    Party: "Rep",
+    wvote: "156098",
+    lvote: "155989"
+  },
+  {
+    Candidate: "",
+    District: "23",
+    Party: "Rep",
+    wvote: "181021",
+    lvote: "128976"
+  },
+  {
+    Candidate: "",
+    District: "24",
+    Party: "Rep",
+    wvote: "182809",
+    lvote: "147877"
+  },
+  {
+    Candidate: "",
+    District: "25",
+    Party: "Dem",
+    wvote: "206396",
+    lvote: "187503"
+  },
+  {
+    Candidate: "",
+    District: "26",
+    Party: "Dem",
+    wvote: "223366",
+    lvote: "91706"
+  },
+  {
+    Candidate: "",
+    District: "27",
+    Party: "Rep",
+    wvote: "228885",
+    lvote: "149449"
+  }
+]
+
+const north_carolina_2020 = [
+  {
+    Candidate: "",
+    District: "1",
+    Party: "Dem",
+    wvote: "188870",
+    lvote: "159748"
+  },
+  {
+    Candidate: "",
+    District: "2",
+    Party: "Dem",
+    wvote: "311887",
+    lvote: "172544"
+  },
+  {
+    Candidate: "",
+    District: "3",
+    Party: "Rep",
+    wvote: "229800",
+    lvote: "132752"
+  },
+  {
+    Candidate: "",
+    District: "4",
+    Party: "Dem",
+    wvote: "332421",
+    lvote: "161298"
+  },
+  {
+    Candidate: "",
+    District: "5",
+    Party: "Rep",
+    wvote: "257843",
+    lvote: "119846"
+  },
+  {
+    Candidate: "",
+    District: "6",
+    Party: "Dem",
+    wvote: "253531",
+    lvote: "153598"
+  },
+  {
+    Candidate: "",
+    District: "7",
+    Party: "Rep",
+    wvote: "272443",
+    lvote: "179045"
+  },
+  {
+    Candidate: "",
+    District: "8",
+    Party: "Rep",
+    wvote: "202774",
+    lvote: "177781"
+  },
+  {
+    Candidate: "",
+    District: "9",
+    Party: "Rep",
+    wvote: "224661",
+    lvote: "179463"
+  },
+  {
+    Candidate: "",
+    District: "10",
+    Party: "Rep",
+    wvote: "284095",
+    lvote: "128189"
+  },
+  {
+    Candidate: "",
+    District: "11",
+    Party: "Rep",
+    wvote: "245351",
+    lvote: "190609"
+  },
+  {
+    Candidate: "",
+    District: "12",
+    Party: "Dem",
+    wvote: "341457",
+    lvote: "0"
+  },
+  {
+    Candidate: "",
+    District: "13",
+    Party: "Rep",
+    wvote: "267181",
+    lvote: "124684"
+  }
+]
+
+const ohio_2020 = [
+  {
+    Candidate: "",
+    District: "1",
+    Party: "Rep",
+    wvote: "199560",
+    lvote: "172022"
+  },
+  {
+    Candidate: "",
+    District: "2",
+    Party: "Rep",
+    wvote: "230430",
+    lvote: "146781"
+  },
+  {
+    Candidate: "",
+    District: "3",
+    Party: "Dem",
+    wvote: "227420",
+    lvote: "93569"
+  },
+  {
+    Candidate: "",
+    District: "4",
+    Party: "Rep",
+    wvote: "235875",
+    lvote: "101897"
+  },
+  {
+    Candidate: "",
+    District: "5",
+    Party: "Rep",
+    wvote: "257019",
+    lvote: "120962"
+  },
+  {
+    Candidate: "",
+    District: "6",
+    Party: "Rep",
+    wvote: "249130",
+    lvote: "85661"
+  },
+  {
+    Candidate: "",
+    District: "7",
+    Party: "Rep",
+    wvote: "236607",
+    lvote: "102271"
+  },
+  {
+    Candidate: "",
+    District: "8",
+    Party: "Rep",
+    wvote: "246277",
+    lvote: "110766"
+  },
+  {
+    Candidate: "",
+    District: "9",
+    Party: "Dem",
+    wvote: "190328",
+    lvote: "111385"
+  },
+  {
+    Candidate: "",
+    District: "10",
+    Party: "Rep",
+    wvote: "212972",
+    lvote: "151976"
+  },
+  {
+    Candidate: "",
+    District: "11",
+    Party: "Dem",
+    wvote: "242098",
+    lvote: "60323"
+  },
+  {
+    Candidate: "",
+    District: "12",
+    Party: "Rep",
+    wvote: "241790",
+    lvote: "182847"
+  },
+  {
+    Candidate: "",
+    District: "13",
+    Party: "Dem",
+    wvote: "173631",
+    lvote: "148648"
+  },
+  {
+    Candidate: "",
+    District: "14",
+    Party: "Rep",
+    wvote: "238864",
+    lvote: "158586"
+  },
+  {
+    Candidate: "",
+    District: "15",
+    Party: "Rep",
+    wvote: "243103",
+    lvote: "140183"
+  },
+  {
+    Candidate: "",
+    District: "16",
+    Party: "Rep",
+    wvote: "247335",
+    lvote: "144071"
+  }
+]
+
+const oklahoma_2020 = [
+  {
+    Candidate: "",
+    District: "1",
+    Party: "Rep",
+    wvote: "213700",
+    lvote: "109641"
+  },
+  {
+    Candidate: "",
+    District: "2",
+    Party: "Rep",
+    wvote: "216511",
+    lvote: "63472"
+  },
+  {
+    Candidate: "",
+    District: "3",
+    Party: "Rep",
+    wvote: "213096",
+    lvote: "90459"
+  },
+  {
+    Candidate: "",
+    District: "4",
+    Party: "Rep",
+    wvote: "158191",
+    lvote: "145658"
+  }
+]
+
+const oregon_2020 = [
+  {
+    Candidate: "",
+    District: "1",
+    Party: "Dem",
+    wvote: "297071",
+    lvote: "161928"
+  },
+  {
+    Candidate: "",
+    District: "2",
+    Party: "Rep",
+    wvote: "273835",
+    lvote: "168881"
+  },
+  {
+    Candidate: "",
+    District: "3",
+    Party: "Dem",
+    wvote: "343574",
+    lvote: "110570"
+  },
+  {
+    Candidate: "",
+    District: "4",
+    Party: "Dem",
+    wvote: "240950",
+    lvote: "216081"
+  },
+  {
+    Candidate: "",
+    District: "5",
+    Party: "Dem",
+    wvote: "234864",
+    lvote: "204372"
+  }
+]
+
+const pennsylvania_2020 = [
+  {
+    Candidate: "",
+    District: "1",
+    Party: "Rep",
+    wvote: "249804",
+    lvote: "191875"
+  },
+  {
+    Candidate: "",
+    District: "2",
+    Party: "Dem",
+    wvote: "198140",
+    lvote: "75022"
+  },
+  {
+    Candidate: "",
+    District: "3",
+    Party: "Dem",
+    wvote: "341708",
+    lvote: "33671"
+  },
+  {
+    Candidate: "",
+    District: "4",
+    Party: "Dem",
+    wvote: "264637",
+    lvote: "179926"
+  },
+  {
+    Candidate: "",
+    District: "5",
+    Party: "Dem",
+    wvote: "255743",
+    lvote: "139552"
+  },
+  {
+    Candidate: "",
+    District: "6",
+    Party: "Dem",
+    wvote: "226440",
+    lvote: "177526"
+  },
+  {
+    Candidate: "",
+    District: "7",
+    Party: "Dem",
+    wvote: "195475",
+    lvote: "181407"
+  },
+  {
+    Candidate: "",
+    District: "8",
+    Party: "Dem",
+    wvote: "178004",
+    lvote: "165783"
+  },
+  {
+    Candidate: "",
+    District: "9",
+    Party: "Rep",
+    wvote: "232988",
+    lvote: "118266"
+  },
+  {
+    Candidate: "",
+    District: "10",
+    Party: "Rep",
+    wvote: "208896",
+    lvote: "182938"
+  },
+  {
+    Candidate: "",
+    District: "11",
+    Party: "Rep",
+    wvote: "241915",
+    lvote: "141325"
+  },
+  {
+    Candidate: "",
+    District: "12",
+    Party: "Rep",
+    wvote: "241035",
+    lvote: "99199"
+  },
+  {
+    Candidate: "",
+    District: "13",
+    Party: "Rep",
+    wvote: "267789",
+    lvote: "96612"
+  },
+  {
+    Candidate: "",
+    District: "14",
+    Party: "Rep",
+    wvote: "241688",
+    lvote: "131895"
+  },
+  {
+    Candidate: "",
+    District: "15",
+    Party: "Rep",
+    wvote: "255058",
+    lvote: "92156"
+  },
+  {
+    Candidate: "",
+    District: "16",
+    Party: "Rep",
+    wvote: "210088",
+    lvote: "143962"
+  },
+  {
+    Candidate: "",
+    District: "17",
+    Party: "Dem",
+    wvote: "222253",
+    lvote: "212284"
+  },
+  {
+    Candidate: "",
+    District: "18",
+    Party: "Dem",
+    wvote: "266084",
+    lvote: "118163"
+  }
+]
+
+const rhode_island_2020 = [
+  {
+    Candidate: "",
+    District: "1",
+    Party: "Dem",
+    wvote: "158550",
+    lvote: "59457"
+  },
+  {
+    Candidate: "",
+    District: "2",
+    Party: "Dem",
+    wvote: "154086",
+    lvote: "109894"
+  }
+]
+
+const south_carolina_2020 = [
+  {
+    Candidate: "",
+    District: "1",
+    Party: "Rep",
+    wvote: "216042",
+    lvote: "210627"
+  },
+  {
+    Candidate: "",
+    District: "2",
+    Party: "Rep",
+    wvote: "202715",
+    lvote: "155118"
+  },
+  {
+    Candidate: "",
+    District: "3",
+    Party: "Rep",
+    wvote: "237544",
+    lvote: "95712"
+  },
+  {
+    Candidate: "",
+    District: "4",
+    Party: "Rep",
+    wvote: "222126",
+    lvote: "133023"
+  },
+  {
+    Candidate: "",
+    District: "5",
+    Party: "Rep",
+    wvote: "220006",
+    lvote: "145979"
+  },
+  {
+    Candidate: "",
+    District: "6",
+    Party: "Dem",
+    wvote: "197477",
+    lvote: "89258"
+  },
+  {
+    Candidate: "",
+    District: "7",
+    Party: "Rep",
+    wvote: "224993",
+    lvote: "138863"
+  }
+]
+
+const tennessee = [
+  {
+    Candidate: "",
+    District: "1",
+    Party: "Rep",
+    wvote: "228181",
+    lvote: "68617"
+  },
+  {
+    Candidate: "",
+    District: "2",
+    Party: "Rep",
+    wvote: "238907",
+    lvote: "109684"
+  },
+  {
+    Candidate: "",
+    District: "3",
+    Party: "Rep",
+    wvote: "215571",
+    lvote: "97687"
+  },
+  {
+    Candidate: "",
+    District: "4",
+    Party: "Rep",
+    wvote: "223802",
+    lvote: "111908"
+  },
+  {
+    Candidate: "",
+    District: "5",
+    Party: "Dem",
+    wvote: "252155",
+    lvote: "14"
+  },
+  {
+    Candidate: "",
+    District: "6",
+    Party: "Rep",
+    wvote: "257572",
+    lvote: "83852"
+  },
+  {
+    Candidate: "",
+    District: "7",
+    Party: "Rep",
+    wvote: "245188",
+    lvote: "95839"
+  },
+  {
+    Candidate: "",
+    District: "8",
+    Party: "Rep",
+    wvote: "227216",
+    lvote: "97890"
+  },
+  {
+    Candidate: "",
+    District: "9",
+    Party: "Dem",
+    wvote: "187905",
+    lvote: "48818"
+  }
+]
+
+const texas_2020 = [
+  {
+    Candidate: "",
+    District: "1",
+    Party: "Rep",
+    wvote: "219726",
+    lvote: "83016"
+  },
+  {
+    Candidate: "",
+    District: "2",
+    Party: "Rep",
+    wvote: "192828",
+    lvote: "148374"
+  },
+  {
+    Candidate: "",
+    District: "3",
+    Party: "Rep",
+    wvote: "230512",
+    lvote: "179458"
+  },
+  {
+    Candidate: "",
+    District: "4",
+    Party: "Rep",
+    wvote: "253837",
+    lvote: "76326"
+  },
+  {
+    Candidate: "",
+    District: "5",
+    Party: "Rep",
+    wvote: "173836",
+    lvote: "100743"
+  },
+  {
+    Candidate: "",
+    District: "6",
+    Party: "Rep",
+    wvote: "179507",
+    lvote: "149530"
+  },
+  {
+    Candidate: "",
+    District: "7",
+    Party: "Dem",
+    wvote: "159529",
+    lvote: "149054"
+  },
+  {
+    Candidate: "",
+    District: "8",
+    Party: "Rep",
+    wvote: "277327",
+    lvote: "97409"
+  },
+  {
+    Candidate: "",
+    District: "9",
+    Party: "Dem",
+    wvote: "172938",
+    lvote: "49575"
+  },
+  {
+    Candidate: "",
+    District: "10",
+    Party: "Rep",
+    wvote: "217216",
+    lvote: "187686"
+  },
+  {
+    Candidate: "",
+    District: "11",
+    Party: "Rep",
+    wvote: "232568",
+    lvote: "53394"
+  },
+  {
+    Candidate: "",
+    District: "12",
+    Party: "Rep",
+    wvote: "233853",
+    lvote: "121250"
+  },
+  {
+    Candidate: "",
+    District: "13",
+    Party: "Rep",
+    wvote: "217124",
+    lvote: "50477"
+  },
+  {
+    Candidate: "",
+    District: "14",
+    Party: "Rep",
+    wvote: "190541",
+    lvote: "118574"
+  },
+  {
+    Candidate: "",
+    District: "15",
+    Party: "Dem",
+    wvote: "115605",
+    lvote: "109017"
+  },
+  {
+    Candidate: "",
+    District: "16",
+    Party: "Dem",
+    wvote: "154108",
+    lvote: "84006"
+  },
+  {
+    Candidate: "",
+    District: "17",
+    Party: "Rep",
+    wvote: "171390",
+    lvote: "125565"
+  },
+  {
+    Candidate: "",
+    District: "18",
+    Party: "Dem",
+    wvote: "180952",
+    lvote: "58033"
+  },
+  {
+    Candidate: "",
+    District: "19",
+    Party: "Rep",
+    wvote: "198198",
+    lvote: "60583"
+  },
+  {
+    Candidate: "",
+    District: "20",
+    Party: "Dem",
+    wvote: "175078",
+    lvote: "89628"
+  },
+  {
+    Candidate: "",
+    District: "21",
+    Party: "Rep",
+    wvote: "235740",
+    lvote: "205780"
+  },
+  {
+    Candidate: "",
+    District: "22",
+    Party: "Rep",
+    wvote: "210259",
+    lvote: "181998"
+  },
+  {
+    Candidate: "",
+    District: "23",
+    Party: "Rep",
+    wvote: "149395",
+    lvote: "137693"
+  },
+  {
+    Candidate: "",
+    District: "24",
+    Party: "Rep",
+    wvote: "167910",
+    lvote: "163326"
+  },
+  {
+    Candidate: "",
+    District: "25",
+    Party: "Rep",
+    wvote: "220088",
+    lvote: "165697"
+  },
+  {
+    Candidate: "",
+    District: "26",
+    Party: "Rep",
+    wvote: "261963",
+    lvote: "161009"
+  },
+  {
+    Candidate: "",
+    District: "27",
+    Party: "Rep",
+    wvote: "172305",
+    lvote: "95446"
+  },
+  {
+    Candidate: "",
+    District: "28",
+    Party: "Dem",
+    wvote: "137494",
+    lvote: "91925"
+  },
+  {
+    Candidate: "",
+    District: "29",
+    Party: "Dem",
+    wvote: "111305",
+    lvote: "42840"
+  },
+  {
+    Candidate: "",
+    District: "30",
+    Party: "Dem",
+    wvote: "204928",
+    lvote: "48685"
+  },
+  {
+    Candidate: "",
+    District: "31",
+    Party: "Rep",
+    wvote: "212695",
+    lvote: "176293"
+  },
+  {
+    Candidate: "",
+    District: "32",
+    Party: "Dem",
+    wvote: "178542",
+    lvote: "157867"
+  },
+  {
+    Candidate: "",
+    District: "33",
+    Party: "Dem",
+    wvote: "105317",
+    lvote: "39638"
+  },
+  {
+    Candidate: "",
+    District: "34",
+    Party: "Dem",
+    wvote: "111439",
+    lvote: "84119"
+  },
+  {
+    Candidate: "",
+    District: "35",
+    Party: "Dem",
+    wvote: "176373",
+    lvote: "80795"
+  },
+  {
+    Candidate: "",
+    District: "36",
+    Party: "Rep",
+    wvote: "222712",
+    lvote: "73148"
+  }
+]
+
+const utah_2020 = [
+  {
+    Candidate: "",
+    District: "1",
+    Party: "Rep",
+    wvote: "237988",
+    lvote: "104194"
+  },
+  {
+    Candidate: "",
+    District: "2",
+    Party: "Rep",
+    wvote: "208997",
+    lvote: "129762"
+  },
+  {
+    Candidate: "",
+    District: "3",
+    Party: "Rep",
+    wvote: "246674",
+    lvote: "96067"
+  },
+  {
+    Candidate: "",
+    District: "4",
+    Party: "Rep",
+    wvote: "179688",
+    lvote: "175923"
+  }
+]
+
+const virginia_2020 = [
+  {
+    Candidate: "",
+    District: "1",
+    Party: "Rep",
+    wvote: "260614",
+    lvote: "186923"
+  },
+  {
+    Candidate: "",
+    District: "2",
+    Party: "Dem",
+    wvote: "185733",
+    lvote: "165031"
+  },
+  {
+    Candidate: "",
+    District: "3",
+    Party: "Dem",
+    wvote: "233326",
+    lvote: "107299"
+  },
+  {
+    Candidate: "",
+    District: "4",
+    Party: "Dem",
+    wvote: "241142",
+    lvote: "149625"
+  },
+  {
+    Candidate: "",
+    District: "5",
+    Party: "Rep",
+    wvote: "210988",
+    lvote: "190315"
+  },
+  {
+    Candidate: "",
+    District: "6",
+    Party: "Rep",
+    wvote: "246606",
+    lvote: "134729"
+  },
+  {
+    Candidate: "",
+    District: "7",
+    Party: "Dem",
+    wvote: "230893",
+    lvote: "222623"
+  },
+  {
+    Candidate: "",
+    District: "8",
+    Party: "Dem",
+    wvote: "301454",
+    lvote: "95365"
+  },
+  {
+    Candidate: "",
+    District: "9",
+    Party: "Rep",
+    wvote: "271851",
+    lvote: "17423"
+  },
+  {
+    Candidate: "",
+    District: "10",
+    Party: "Dem",
+    wvote: "268734",
+    lvote: "206253"
+  },
+  {
+    Candidate: "",
+    District: "11",
+    Party: "Dem",
+    wvote: "280725",
+    lvote: "111380"
+  }
+]
+
+const washington_2020 = [
+  {
+    Candidate: "",
+    District: "1",
+    Party: "Dem",
+    wvote: "249944",
+    lvote: "176407"
+  },
+  {
+    Candidate: "",
+    District: "2",
+    Party: "Dem",
+    wvote: "255252",
+    lvote: "148384"
+  },
+  {
+    Candidate: "",
+    District: "3",
+    Party: "Rep",
+    wvote: "235579",
+    lvote: "181347"
+  },
+  {
+    Candidate: "",
+    District: "4",
+    Party: "Rep",
+    wvote: "202108",
+    lvote: "102667"
+  },
+  {
+    Candidate: "",
+    District: "5",
+    Party: "Rep",
+    wvote: "247815",
+    lvote: "155737"
+  },
+  {
+    Candidate: "",
+    District: "6",
+    Party: "Dem",
+    wvote: "247429",
+    lvote: "168783"
+  },
+  {
+    Candidate: "",
+    District: "7",
+    Party: "Dem",
+    wvote: "387109",
+    lvote: "78240"
+  },
+  {
+    Candidate: "",
+    District: "8",
+    Party: "Dem",
+    wvote: "213123",
+    lvote: "198423"
+  },
+  {
+    Candidate: "",
+    District: "9",
+    Party: "Dem",
+    wvote: "258771",
+    lvote: "89697"
+  },
+  {
+    Candidate: "",
+    District: "10",
+    Party: "Dem",
+    wvote: "167937",
+    lvote: "121040"
+  }
+]
+
+const west_virginia_2020 = [
+  {
+    Candidate: "",
+    District: "1",
+    Party: "Rep",
+    wvote: "180488",
+    lvote: "81177"
+  },
+  {
+    Candidate: "",
+    District: "2",
+    Party: "Rep",
+    wvote: "172195",
+    lvote: "100799"
+  },
+  {
+    Candidate: "",
+    District: "3",
+    Party: "Rep",
+    wvote: "161585",
+    lvote: "64927"
+  }
+]
+
+const wisconsin_2020 = [
+  {
+    Candidate: "",
+    District: "1",
+    Party: "Rep",
+    wvote: "238271",
+    lvote: "163170"
+  },
+  {
+    Candidate: "",
+    District: "2",
+    Party: "Dem",
+    wvote: "318523",
+    lvote: "138306"
+  },
+  {
+    Candidate: "",
+    District: "3",
+    Party: "Dem",
+    wvote: "199870",
+    lvote: "189524"
+  },
+  {
+    Candidate: "",
+    District: "4",
+    Party: "Dem",
+    wvote: "232668",
+    lvote: "70769"
+  },
+  {
+    Candidate: "",
+    District: "5",
+    Party: "Rep",
+    wvote: "265434",
+    lvote: "175902"
+  },
+  {
+    Candidate: "",
+    District: "6",
+    Party: "Rep",
+    wvote: "238874",
+    lvote: "164239"
+  },
+  {
+    Candidate: "",
+    District: "7",
+    Party: "Rep",
+    wvote: "252048",
+    lvote: "162741"
+  },
+  {
+    Candidate: "",
+    District: "8",
+    Party: "Rep",
+    wvote: "268173",
+    lvote: "149558"
+  }
+]
+
+
+const system = document.getElementById("system");
+var sys = system.value;
+
+const state = document.getElementById("state");
+var st = state.value;
+
+const rep_loyalty = document.getElementById("rep_loyalty");
+var rl = rep_loyalty.value;
+
+const dem_loyalty = document.getElementById("dem_loyalty");
+var dl = dem_loyalty.value;
+
+const sims = document.getElementById("sims");
+var simuls = sims.value;
+
+const button = document.getElementById("button");
+
+var elec;
+var res;
+
+class Candidate{
+    constructor(nm, dst, pty, nv=0){
+        this.name = nm;
+        this.district = dst;
+        dst.add_candidate(this) ;
+        this.party = pty;
+        pty.add_member(this);
+        this.vote = nv;
+        this.pop = null;
+    }
+
+    set_pop(p){
+        this.pop = p;
+    }
+
+    set_vote(nv){
+        this.vote = nv;
+    }
+
+    gt(other){
+        return this.vote > other.vote;
+    }
+
+    gt_pop(other){
+        return this.pop > other.pop;
+    }
+
+    view(){
+        var dict = {
+            'party': this.party.name,
+            'vote': this.vote
+        };
+        return dict;
+    }
+}
+
+class Party{ 
+    constructor(nm, nv=0){
+        this.name = nm;
+        this.vote = nv;
+        this.evote = 0;
+        this.members = [];
+        this.loyal = null;
+        this.pop = null;
+    }
+
+    set_loyal(l){
+        this.loyal = l;
+    }
+
+    set_pop(p){
+        this.pop = p;
+    }
+
+    add_member(cand){
+        this.members.push(cand);
+    }
+
+    sum_vote(pars = 1){
+        let sum = 0;
+        for (let i=0; i<this.members.length; i++){
+            sum = sum + this.members[i].vote*pars;
+        }
+        return sum
+    }
+
+    straigh_ticket_vote(pars = 1){
+        let res = this.sum_vote(pars = pars);
+        this.vote = res;
+    }
+
+    gt(other){
+        return this.vote > other.vote;
+    }
+}
+
+class District{
+    constructor(nm){
+        this.name = nm;
+        this.candidates = [];
+    }
+
+    add_candidate(cand){
+        this.candidates.push(cand);
+    }
+
+    display_candidates(){
+        var res = []
+        for(let i=0; i < this.candidates.length; i++){
+            res.push(this.candidates[i]);
+        }
+        return res;
+    }
+
+    sort(){
+        var arr = this.candidates;
+        if (arr.length <= 1) {return;}
+        for(let i=1; i < this.candidates.length; i++){
+            let key = arr[i];
+            let j = i - 1;
+            while(j>=0 && key.gt(arr[j])){
+                arr[j+1] = arr[j];
+                j -= 1;
+            }
+            arr[j+1] = key;
+        }
+        return 
+    }
+}
+
+class Ballot{
+    constructor(districts, parties, candidates, skip = false){
+        if (skip){
+            return
+        }
+        this.parties = parties;
+        this.candidates = candidates;
+        this.districts = districts;
+        this.seats = districts.length;
+    }
+
+    set_seats(num){
+        this.seats = num;
+    }
+
+    sort_candidates(){
+        var arr = this.candidates;
+        if (arr.length <= 1) {return;}
+        for(let i=1; i < this.candidates.length; i++){
+            let key = arr[i];
+            let j = i - 1;
+            while(j>=0 && key.gt(arr[j])){
+                arr[j+1] = arr[j];
+                j -= 1;
+            }
+            arr[j+1] = key;
+        }
+        return 
+    }
+
+    sort_party(mode = 'straight'){
+        // Maybe include split voting in the future
+        if(mode == 'straight'){
+            for(let i=0; i<this.parties.length; i++){
+                this.parties[i].straigh_ticket_vote();
+            }
+        }
+        var arr = this.parties;
+        if (arr.length <= 1) {return;}
+        for(let i=1; i < this.parties.length; i++){
+            let key = arr[i];
+            let j = i - 1;
+            while(j>=0 && key.gt(arr[j])){
+                arr[j+1] = arr[j];
+                j -= 1;
+            }
+            arr[j+1] = key;
+        }
+        return 
+    }
+
+    preprocess_vote(loyal_percentages){
+        for (let i=0; i<this.parties.length; i++){
+            for (let j=0; j<this.parties[i].members.length; j++)
+            {
+                var coef = bm_transform();
+                var nv_tot = this.parties[i].members[j].vote;
+                var nv = loyal_percentages[i]*nv_tot;
+                nv += Math.ceil((nv_tot - nv)*(coef));
+                this.parties[i].members[j].set_vote(nv);
+            }
+        }
+        return
+    }
+
+    deep_copy(){  
+        var REP = new Party('Republican');
+        var DEM = new Party('Democrat');
+        var res = new Ballot(undefined, undefined, undefined, true);
+        res.parties = [REP, DEM];
+        res.districts = [];
+        for (let i=0; i<this.districts.length; i++)
+        {
+            res.districts.push(new District('District ' + (i+1).toString()));
+        }
+
+        res.candidates = [];
+
+        for (let i=0; i<this.districts.length; i++){
+            if (this.districts[i].candidates[0].party.name == 'Democrat' ){
+                res.candidates.push(new Candidate(this.districts[i].candidates[0].name, res.districts[i], DEM, 
+                    this.districts[i].candidates[0].vote));
+                res.candidates.push(new Candidate(this.districts[i].candidates[1].name, res.districts[i], REP, 
+                    this.districts[i].candidates[1].vote));
+            }
+            else{
+                res.candidates.push(new Candidate(this.districts[i].candidates[0].name, res.districts[i], REP, 
+                    this.districts[i].candidates[0].vote));
+                res.candidates.push(new Candidate(this.districts[i].candidates[1].name, res.districts[i], DEM, 
+                    this.districts[i].candidates[1].vote));
+            }
+        }
+        res.seats = res.districts.length;
+        return res
+    }
+}
+
+
+
+class election{
+    constructor(init_election, pars = null){
+        this.start = init_election;
+        this.pars = pars;
+        this.ballot = init_election(pars);
+        this.working_ballot = init_election(pars);
+        // this.working_ballot.preprocess_vote(pars[1]);
+        this.result = null;
+    }
+
+    reset(){
+        this.working_ballot = this.ballot.deep_copy() //.preprocess_vote(this.pars[1]); 
+    }
+
+    get_pops(){
+        var original = this.ballot;
+        var model = this.working_ballot;
+        let loyal = [];
+        let actual = [];
+        for (let i=0; i<model.parties.length; i++){
+            model.parties[i].set_loyal(this.pars[1][i]);
+            loyal.push(original.parties[i].sum_vote(pars = this.pars[1][i]));
+            actual.push(model.parties[i].sum_vote());
+        }
+
+        var res = {};
+        for (let i=0; i<model.parties.length; i++){
+            res[model.parties[i].name] = loyal[i];
+        }
+
+        for (let i=0; i<model.parties.length; i++){
+            model.parties[i].set_pop(loyal[i]/sum(actual));
+        }
+        let sv = 0;
+        for (let i=0; i<model.districts.length; i++)
+        {
+            let all_swing_votes = [];
+            let lv = [];
+            for (let j=0; j<model.districts[i].candidates.length; j++)
+            {
+                lv.push(original.districts[i].candidates[j].vote*model.districts[i].candidates[j].party.loyal);
+                all_swing_votes.push(model.districts[i].candidates[j].vote - lv[j]);
+            }
+            for (let j=0; j<model.districts[i].candidates.length; j++)
+            {
+                let sasv = 1;
+                if (sum(all_swing_votes)==0){
+                    sasv = 1;
+                }
+                else{
+                    sasv = sum(all_swing_votes);
+                }
+                model.districts[i].candidates[j].set_pop(all_swing_votes[j]/sasv);
+            }
+            sv += sum(all_swing_votes);
+        }
+        return [res, sv];
+    }
+}
+
+class SMD_election extends election{
+// Single member district(base case)
+    constructor(e){
+        super(e.start, pars = e.pars);
+        this.ballot = e.ballot.deep_copy();
+        this.working_ballot = e.ballot.deep_copy();
+    }
+
+    count(){
+        var model = this.working_ballot;
+        for(let i=0; i<model.districts.length; i++){
+            model.districts[i].sort();
+        }
+        this.result = model;
+        this.reset();
+        return model; 
+    }
+
+    report(){
+        var res = []
+        for(let i=0; i<this.result.seats; i++){
+            let pn = this.result.districts[i].candidates[0].party.name;
+            res.push(new result(pn));
+        }
+        return res
+    }
+}
+
+// utility functions
+
+function sum(arr){
+    let s = 0
+    for(let i=0; i<arr.length; i++){
+        s += arr[i];
+    }
+    return s
+}
+
+function zeros(size){
+    var arr = new Array(size);
+    for(i=0; i<arr.length; i++){
+        arr[i] = 0;
+    }
+    return arr
+}
+
+class PLPR_election extends election{
+// PLPR Voting
+    constructor(e){
+        super(e.start, pars = e.pars);
+        this.ballot = e.ballot.deep_copy();
+        this.working_ballot = e.ballot.deep_copy();
+    }
+
+    count(){
+        var model = this.working_ballot;
+        model.sort_party();
+        this.result = model;
+        this.reset();
+        this.get_raw_res();
+        return model; 
+    }
+
+    get_raw_res(){
+        var model = this.result;
+        var tmp = new Array(model.parties.length);
+        for (let i=0; i<model.parties.length; i++){
+            tmp[i] = model.parties[i].vote;
+        }
+        let tot = sum(tmp);
+        let true_prop = zeros(tmp.length);
+        var res = zeros(tmp.length);
+
+        for(i=0; i < res.length; i++){
+            true_prop[i] = tmp[i]/tot*model.seats;
+            res[i] = Math.trunc(tmp[i]/tot*model.seats);
+        }
+
+        let rest = model.seats - sum(res);     
+        let remainder = new Array(res.length);
+        for(let i=0; i<res.length; i++){
+            remainder[i] = [i, true_prop[i] - res[i]];
+        }
+
+        function PLPR_gt(a,b){
+            return a[1] > b[1];
+        }
+
+        if (remainder.length > 1){
+            for(let i=1; i<remainder.length; i++){
+                let key = remainder[i];
+                let j = i - 1;
+                while(j>=0 && PLPR_gt(key,remainder[j])){
+                    remainder[j+1] = remainder[j];
+                    j -= 1;
+                }
+                remainder[j+1] = key;
+            }
+        }
+
+        for(let i=0; i<remainder.length; i++){
+            if(rest == 0){break;}    
+            res[remainder[i][0]] += 1;
+            rest -= 1;
+        }
+            
+        for(let i=0; i<model.parties.length; i++){
+            model.parties[i].evote = res[i];
+        }
+        return;
+    }
+
+    report(){
+        var res = []
+        let p = this.result.parties;
+        for(let i=0; i<p.length; i++){
+            let pev = p[i].evote;
+            while(pev > 0){
+                res.push(new result(p[i].name));
+                pev -= 1;
+            }
+        }
+        return res;
+    }
+}
+
+class ND_election extends election{
+    // No district
+        constructor(e){
+            super(e.start, pars = e.pars);
+            this.ballot = e.ballot.deep_copy();
+            this.working_ballot = e.ballot.deep_copy();
+        } 
+
+        count(){
+            var model = this.working_ballot;
+            var out = this.get_pops();
+            var dict = out[0];
+            var sv = out[1];
+            for (let i=0; i < model.candidates.length; i++){
+                let v = dict[model.candidates[i].party.name] + model.candidates[i].pop*sv;
+                model.candidates[i].set_vote(v);
+            }
+            model.sort_candidates();
+            this.result = model;
+            this.reset();
+            return model; 
+        }
+    
+        report(){
+            var res = []
+            let c = this.result.candidates;
+            for(let i=0; i<this.result.seats; i++){
+                res.push(new result(c[i].party.name));
+            }
+            return res;
+        }
+    }
+
+function redistrict(X){
+    let blt = X[0];
+    let n = X[1];
+    let lim = blt.districts.length;
+    var arr = [];
+    while(arr.length < n){
+        var r = Math.floor(Math.random() * lim) + 1;
+        if(arr.indexOf(r) === -1) arr.push(r);
+    }
+    var REP = new Party('Republican');
+    var DEM = new Party('Democrat');
+    var res = new Ballot(undefined, undefined, undefined, true);
+    res.parties = [REP, DEM];
+    res.districts = [];
+    for (let i=0; i<lim; i++)
+    {
+        if (i in arr){
+            res.districts.push(new District('District ' + (i+1).toString()));
+        }
+    }
+
+    res.candidates = [];
+    let dvote = 0;
+    let rvote = 0;
+    for (let i=0; i<blt.districts.length; i++){
+        if ((i in arr) && blt.districts[i].candidates[0].party.name == 'Democrat'){
+            res.candidates.push(new Candidate(blt.districts[i].candidates[0].name, res.districts[i], DEM, 
+                blt.districts[i].candidates[0].vote));
+            res.candidates.push(new Candidate(blt.districts[i].candidates[1].name, res.districts[i], REP, 
+                blt.districts[i].candidates[1].vote));
+        }
+        else if((i in arr) && blt.districts[i].candidates[0].party.name == 'Republican'){
+            res.candidates.push(new Candidate(blt.districts[i].candidates[0].name, res.districts[i], REP, 
+                blt.districts[i].candidates[0].vote));
+            res.candidates.push(new Candidate(blt.districts[i].candidates[1].name, res.districts[i], DEM, 
+                blt.districts[i].candidates[1].vote));
+        }
+        else if(blt.districts[i].candidates[0].party.name == 'Democrat'){
+            dvote += blt.districts[i].candidates[0].vote;
+            rvote += blt.districts[i].candidates[1].vote;
+        }
+        else{
+            dvote += blt.districts[i].candidates[1].vote;
+            rvote += blt.districts[i].candidates[0].vote;
+        }
+    }
+
+    for (let i=0; i<res.districts.length; i++){
+        if (res.districts[i].candidates[0].party.name == 'Democrat'){
+            res.districts[i].candidates[0].vote += Math.floor(dvote/n);
+            res.districts[i].candidates[1].vote += Math.floor(rvote/n);
+        }
+        else if(res.districts[i].candidates[0].party.name == 'Republican'){
+            res.districts[i].candidates[0].vote += Math.floor(rvote/n);
+            res.districts[i].candidates[1].vote += Math.floor(dvote/n);
+        }
+    }
+    return res;
+}
+
+class mixed_election extends election{
+    // mixed system between SMB and PLPR
+    constructor(e){
+        super(e.start, pars = e.pars);
+        this.ballot = e.ballot.deep_copy();
+        this.working_ballot = e.ballot.deep_copy();
+        this.note = null;
+    }
+
+    count(){
+        let m = Math.floor(this.ballot.seats/2);
+        let n = this.ballot.seats - m;
+        let sub_election = new election(redistrict, pars = [this.working_ballot,n]);
+        sub_election = new SMD_election(sub_election);
+        sub_election.count();
+        let res1 = sub_election.report();
+        this.result = sub_election;
+        this.note = res1
+        if (m == 0){
+            return
+        }
+        let prv = this.ballot.parties[0].sum_vote(pars = this.pars[1][0]);
+        let pdv = this.ballot.parties[1].sum_vote(pars = this.pars[1][0]);
+        let revote = Math.round(prv/(prv+pdv) * m);
+        let devote = m - revote;
+        for(let i=0; i<devote; i++){
+            res1.push(new result('Democrat'));
+        }
+        for(let i=0; i<revote; i++){
+            res1.push(new result('Republican'));
+        }
+        return
+    }
+
+    report(){
+        return this.note;
+    }
+}
+
+// result class
+
+class raw_result{
+    // For party-related voting
+    constructor(nm, vt, evt){
+        this.name = nm;
+        this.vote = vote;
+        this.evote = evt;
+    }
+}
+
+class result{
+    constructor(pn){
+        this.party_name = pn;
+    }
+
+    eval(){
+        if (this.party_name == 'Democrat'){
+            return true
+        }
+        else{
+            return false
+        }
+    }
+}
+
+
+// Helper functions for processing vote data for simulation
+// Box_Muller transform for normal distributuion
+
+function bm_transform() {
+    let u = 0, v = 0;
+    while(u === 0) u = Math.random(); //Converting [0,1) to (0,1)
+    while(v === 0) v = Math.random();
+    let num = Math.sqrt( -2.0 * Math.log( u ) ) * Math.cos( 2.0 * Math.PI * v );
+    num = num / 10.0 + 0.5; // Translate to 0 -> 1
+    if (num > 1 || num < 0) return randn_bm() // resample between 0 and 1
+    return num
+  }
+
+// function rdn_vote(coef){
+//     var nv_tot = this.parties[i].members[j].vote;
+//     var nv = loyal_precentages[i]*nv_tot;
+//     nv += Math.ceil((nv_tot - nv)*coef);
+//     this.parties[i].members[j].set_vote(nv);
+// }
+
+// Constructing geometry of the election map
+
+
+class coordinate{
+    constructor(x,y){
+        this.x = x;
+        this.y = y;
+    }
+}
+
+// Generic
+
+function get_dim(l){
+    const sq = [1, 4, 9, 25, 36, 49, 64];
+    const base = [1,2,3,4,5,6,7,8];
+    for(let i=0; i<sq.length; i++){
+        if(sq[i] > l){
+            const num_row = base[i];
+            const num_col = Math.ceil(l/base[i]);
+            const remainder = l % base[i];
+            return [num_row, num_col, remainder];
+        }
+    }
+}
+
+function get_dim(l){
+    const sq = [1, 4, 9, 25, 36, 49, 64];
+    const base = [1,2,3,4,5,6,7,8];
+    for(let i=0; i<sq.length; i++){
+        if(sq[i] > l){
+            const num_row = base[i];
+            const num_col = Math.ceil(l/base[i]);
+            const remainder = l % base[i];
+            return [num_row, num_col, remainder];
+        }
+    }
+}
+
+
+function gen_election_res(ctx, width, height, res, padcoef = 0.1){
+    const dim = get_dim(res.length);
+    const num_row = dim[0];
+    const num_col = dim[1];
+    const remainder = dim[2];
+
+    const side_tot = 0.8*height/num_row;
+    const side = side_tot - padcoef*side_tot;
+    var pars = []
+    for(let i=0; i<num_col; i++){
+        for(let j=0; j<num_row; j++){
+            let x = 0.1*height + side_tot*i;
+            let y = 0.1*height + side_tot*j;
+            pars.push(new coordinate(x, y));
+            if ((i==num_col-1) && (j==remainder-1)){
+                break;
+            }
+        }
+    }
+    fill_squares(ctx, side, res, pars);
+}
+
+function get_color(pn){
+    if(pn == 'Republican'){
+        return '#FF0000';
+    }
+    else if(pn == 'Democrat'){
+        return '#0000FF';
+    }
+    else if(pn == 'Libertarian'){
+        return '#FFFF00';
+    }
+    else if(pn == 'Pacific Green'){
+        return '#008000';
+    }
+    else{
+        EvalError();
+    }
+}
+
+function fill_squares(ctx, side, res, pars){
+    for(let i=0; i<res.length; i++){
+        ctx.fillStyle = get_color(res[i].party_name);
+        ctx.fillRect(pars[i].x, pars[i].y, side, side);
+    }
+}
+
+function present(gen, res, pad_coef = 0.1){
+    const canvas = document.getElementById("sim");
+    const width = canvas.width;
+    const height = canvas.height;
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#f5f3f4';
+    ctx.fillRect(0, 0, width, height);
+    gen(ctx, width, height, res, pad_coef = pad_coef);
+}
+
+function image(state_year){
+    const canvas_map = document.getElementById("map");
+    const width_map = canvas_map.width;
+    const height_map = canvas_map.height;
+    const ctx_map = canvas_map.getContext('2d');
+    ctx_map.fillStyle = '#f5f3f4';
+    ctx_map.fillRect(0, 0, width_map, height_map);
+    map = new Image();
+  map.src = 'states_images_2/states_images/' + state_year + '.png';
+  map.onload = function(){
+    ctx_map.drawImage(map, 0, 0, map.width, map.height, 0, 0, width_map, height_map);
+  }
+}
+
+
+function find_party(pn){
+    const dl = 'Dem';
+    if (pn == dl){return true;}
+    else{ return false;}
+}
+
+
+function parse_data(X){
+    arr = X[0];
+    // loyal_percentages = X[1];
+    const candidate_parties = [];
+    const wvotes = [];
+    const lvotes = [];
+    var num_dist = 0;
+    for (let i=0; i<arr.length; i++){
+        candidate_parties.push(arr[i]['Party']);
+        wvotes.push(parseInt(arr[i]['wvote']));
+        lvotes.push(parseInt(arr[i]['lvote']));
+        num_dist += 1;
+    }
+    var REP = new Party('Republican');
+    var DEM = new Party('Democrat');
+    var parties = [REP, DEM]; 
+    var districts = [];
+    for (let i=0; i<num_dist; i++){
+        districts.push(new District('District ' + (i+1).toString()));
+    }
+    var candidates = [];
+    for (let i=0; i<num_dist; i++){
+        if (find_party(candidate_parties[i])){
+            candidates.push(new Candidate('Dem ' + i.toString(), districts[i], DEM, wvotes[i]));
+            candidates.push(new Candidate('Rep ' + i.toString(), districts[i], REP, lvotes[i]));
+        }
+        else{
+            candidates.push(new Candidate('Rep ' + i.toString(), districts[i], REP, wvotes[i]));
+            candidates.push(new Candidate('Dem ' + i.toString(), districts[i], DEM, lvotes[i]));
+        }     
+    }
+    var res = new Ballot(districts, parties, candidates);
+    res.set_seats(num_dist);
+    res.preprocess_vote(X[1]);
+    return res;
+}
+
+//  Making stats class
+
+
+function process_res(res){
+    let dem_vote = 0; 
+    let rep_vote = 0;
+    for(let i=0; i<res.length; i++){
+        if (res[i].eval()){
+            dem_vote += 1;
+        }
+        else{
+            rep_vote += 1;
+        }
+    }
+    return [dem_vote, rep_vote];
+} 
+
+class res_dat{
+    constructor(res){
+        let Y = process_res(res);
+        this.dem = Y[0];
+        this.rep = Y[1];
+    }
+}
+
+function get_mean(arr){
+    return sum(arr)/arr.length;
+}
+
+function get_std(arr){
+    let mean = get_mean(arr);
+    let tmp = 0;
+    for(let i=0; i<arr.length; i++){
+        tmp += (arr[i] - mean)**2;
+    } 
+    return ((1/arr.length)*tmp)**0.5;
+}
+
+class stats{
+    constructor(res_dat_list){
+        this.lim = res_dat_list[0].length;
+        let n = res_dat_list.length;
+        this.dem_ob = [];
+        this.rep_ob = [];
+        let dem_win = 0;
+        let rep_win = 0;
+        let tie = 0;
+        for(let i=0; i<res_dat_list.length ;i++){
+            this.dem_ob.push(res_dat_list[i].dem);
+            this.rep_ob.push(res_dat_list[i].rep);
+            if (res_dat_list[i].dem < res_dat_list[i].rep){
+                rep_win += 1;
+            }
+            else if(res_dat_list[i].dem < res_dat_list[i].rep){
+                dem_win += 1;
+            }
+            else{
+                tie += 1;
+            }
+        }
+        this.dem_mean = get_mean(this.dem_ob);
+        this.dem_std = get_std(this.dem_ob);
+        this.rep_mean = get_mean(this.rep_ob)
+        this.rep_std = get_std(this.rep_ob);;
+        this.winrate_dem = Math.round(dem_win/n);
+        this.winrate_rep = Math.round(rep_win/n);
+        this.tie_rate = Math.round(tie/n);
+    }
+
+    get_obs(){
+        let obd = [];
+        let obr = [];
+        for(let i=0; i<this.dem_ob.length; i++){
+            obd.push(this.dem_ob[i]);
+            obr.push(this.rep_ob[i]);
+        }
+        return [obd, obr]
+    }
+
+    make_dict(){
+        var dem_dict = {};
+        var rep_dict = {};
+        for(let i=0; i<this.dem_ob.length; i++)
+        {
+            if(dem_dict[this.dem_ob[i]] == undefined){
+                dem_dict[this.dem_ob[i]] = 1;
+            }
+            else{
+                dem_dict[this.dem_ob[i]] += 1;
+            }
+            if(rep_dict[this.rep_ob[i]] == undefined){
+                rep_dict[this.rep_ob[i]] = 1;
+            }
+            else{
+                rep_dict[this.rep_ob[i]] += 1;
+            }
+        }
+        return [dem_dict, rep_dict]
+    }
+}
+
+const canvas2 = document.getElementById("stats_plot");
+const width2 = canvas2.width;
+const height2 = canvas2.height;
+const ctx2 = canvas2.getContext('2d');
+ctx2.fillStyle = '#f5f3f4';
+ctx2.fillRect(0, 0, width2, height2);
+
+// simulate n times
+
+function simulation(f, X, n, mode){
+    var rl = [];
+    for(let i = 0; i<n; i++){
+        var elec = new election(f, pars = X);
+        if (mode == 'SMD'){
+            el = new SMD_election(elec, pars = X);
+        }
+        else if (mode == 'PLPR'){
+            el = new PLPR_election(elec, pars = X);
+        }
+        else if(mode = 'ND'){
+            el = new ND_election(elec, pars = X);
+        }
+        else{
+            el = new mixed_election(elec, pars = X);
+        }
+        el.count();
+        var res = el.report();
+        rl.push(new res_dat(res));
+    }
+    var st = new stats(rl);
+    return st;
+}
+
+// present repetition data;
+
+function draw_bar(ctx, ll_x, ll_y, wid, hi, col){
+    ctx.beginPath(); //set the path to empty
+    ctx.moveTo(ll_x,ll_y); 
+    ctx.lineTo(ll_x,ll_y-hi);
+    ctx.lineTo(ll_x+wid,ll_y-hi);
+    ctx.lineTo(ll_x+wid,ll_y);
+    ctx.closePath(); //add a line back to the first point of this sub-path
+    ctx.fillStyle = col;
+    ctx.fill();
+}
+
+function draw_axis(ctx, xi, yi, xf, yf, wid, color){
+    ctx.beginPath();
+    ctx.moveTo(xi, yi);
+    ctx.lineTo(xf, yf);
+    ctx.lineWidth = wid;
+    ctx.strokeStyle = color;
+    ctx.stroke();
+}   
+
+function find_max(arr){
+    let res = arr[0];
+    for(let i=0; i<arr.length; i++){
+        if (arr[i] > res){
+            res = arr[i];
+        }
+    }
+    return res;
+}
+
+function find_min(arr){
+    let res = arr[0];
+    for(let i=0; i<arr.length; i++){
+        if (arr[i] < res){
+            res = arr[i];
+        }
+    }
+    return res;
+}
+
+function present_multi_sim(ctx, width, height, st){
+    let x_dmax = find_max(st.dem_ob);
+    let x_dmin = find_min(st.dem_ob);
+    let x_rmax = find_max(st.rep_ob);
+    let x_rmin = find_min(st.rep_ob);
+    let x_max = find_max([x_dmax, x_rmax]); 
+    let x_min = find_min([x_dmin, x_rmin]); 
+    let y_max = st.dem_ob.length;
+    let num_col = x_max - x_min + 1;
+    if(num_col <= 10){
+        width = (width-20)/3;
+    }
+    else if(num_col <= 20){
+        width = (width-20)/2; 
+    }
+    else{
+        width = width - 20;
+    }
+    let xlen = width/num_col;
+    let col_wid = xlen/2.5;
+    
+    draw_axis(ctx, 20, height-20, 60 + xlen*num_col, height - 20, "#000000");
+    draw_axis(ctx, 20, height-20, 20, 20, "#000000");
+    let x0 = 50;
+    let y0 = height - 20;
+    var dicts = st.make_dict();
+    var dd = dicts[0];
+    var rd = dicts[1];
+    let mark = x_min;
+    let dval = 0;
+    let rval = 0;
+    for(let i=0; i<num_col; i++){
+        if(dd[mark] == undefined){
+            dval = 0;
+        }
+        else{
+            dval = dd[mark];
+            draw_bar(ctx, x0, y0, col_wid, dval*(height-40)/y_max, get_color('Democrat'));
+            ctx.fillStyle = '#000000';
+            ctx.fillText(dval.toString(), x0, y0-dval*(height-40)/y_max-10);
+        }
+        if(rd[mark] == undefined){
+            rval = 0;
+        }
+        else{
+            rval = rd[mark];
+            draw_bar(ctx, x0+col_wid, y0, col_wid, rval*(height-40)/y_max, get_color('Republican'));
+            ctx.fillStyle = '#000000';
+            ctx.fillText(rval.toString(), x0+col_wid, y0-rval*(height-40)/y_max-10);
+        }
+        ctx.fillStyle = '#000000';
+        ctx.fillText(mark.toString(), x0+0.8*col_wid, y0+10);
+        mark += 1;
+        x0 += xlen;
+    }
+    ctx.rotate(270 * Math.PI / 180);
+    // ctx.fillText('People Vaccinated per hundred', , );
+    ctx.font = '20px Arial';
+    ctx.fillText('Occurence', -width/2, 15);
+    ctx.rotate(90 * Math.PI / 180);
+    ctx.fillText('Seats', x0+10, y0+5)
+    let dstr1 = 'Democrat Mean:' + (Math.round(st.dem_mean*10)/10).toString();
+    let dstr2 = 'Democrat Std:' + (Math.round(st.dem_std*100)/100).toString();
+    let rstr1 = 'Republican Mean: ' + (Math.round(st.rep_mean*10)/10).toString();
+    let rstr2 = 'Republican Std:' + (Math.round(st.rep_std*100)/100).toString();
+    ctx.font = '15px Arial';
+    ctx.fillText(dstr1 , x0 + 10, 15);
+    ctx.fillText(dstr2 , x0 + 10, 30);
+    ctx.fillText(rstr1 , x0 + 10, 45);
+    ctx.fillText(rstr2 , x0 + 10, 60);
+    return
+}
+
+function updateSimul() {
+	sys = system.value;
+	st = state.value;
+	rl = rep_loyalty.value;
+	dl = dem_loyalty.value;
+	simuls = sims.value;
+	state_year = st + '_2020';
+	var X = [eval(state_year), [rl/100, dl/100]];
+	var e = new election(parse_data, pars = X);
+	if (sys == "SMD") {
+		elec = new SMD_election(e, pars = X);
+	}
+	if (sys == "PLPR") {
+		elec = new PLPR_election(e, pars = X);
+	}
+	if (sys == "ND") {
+		elec = new ND_election(e, pars = X);
+	}
+	if (sys == "mixed") {
+		elec = new mixed_election(e, pars = X);
+	}
+	elec.count();
+	res = elec.report();
+
+	var st = simulation(parse_data, X, simuls, sys);
+	present(gen_election_res, res);
+	image(state_year);
+	ctx2.fillStyle = '#f5f3f4';
+	ctx2.fillRect(0, 0, width2, height2);
+	present_multi_sim(ctx2, width2, height2, st);
+}
+
+button.addEventListener("click", updateSimul);
+    </script>
+    </body>
+</html>
